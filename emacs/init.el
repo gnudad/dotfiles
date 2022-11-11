@@ -124,6 +124,14 @@
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
+;;; Emacs Lisp
+(use-package lisp-mode
+  :ensure nil
+  :hook (emacs-lisp-mode . outline-minor-mode)
+  :general
+  (:keymaps 'outline-minor-mode-map
+    "z0" 'outline-show-only-headings))
+
 ;;; Misc
 (use-package emacs
   :init
