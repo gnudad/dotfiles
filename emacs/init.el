@@ -31,7 +31,11 @@
   (telephone-line-mode))
 
 ;;; Evil/Keybinds
-(use-package general)
+(use-package general
+  :config
+  (general-define-key
+   "<wheel-left>"  (lambda () (interactive) (scroll-right 2))
+   "<wheel-right>" (lambda () (interactive) (scroll-left  2))))
 
 (use-package evil
   :init
