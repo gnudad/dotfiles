@@ -48,6 +48,7 @@
   (defconst evil-leader "SPC")
   (setq evil-want-C-u-scroll t
 	evil-want-keybinding nil)
+  (modify-syntax-entry ?_ "w")
 
   :config
   (evil-mode)
