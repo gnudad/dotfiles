@@ -158,6 +158,20 @@
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
+;;; Terminal
+(use-package vterm)
+
+(use-package multi-vterm
+  :general
+  (:keymaps 'override :states '(normal motion) :prefix evil-leader
+    "tt" 'multi-vterm
+    "pt" 'multi-vterm-project)
+  (:keymaps 'override :states '(normal motion)
+    "[t" 'multi-vterm-prev
+    "]t" 'multi-vterm-next)
+  (:keymaps 'vterm-mode-map :states '(normal insert motion)
+    "C-q" 'evil-quit))
+
 ;;; Emacs Lisp
 (use-package lisp-mode
   :ensure nil
