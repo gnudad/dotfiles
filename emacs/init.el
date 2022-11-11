@@ -30,6 +30,12 @@
    telephone-line-secondary-right-separator 'telephone-line-identity-hollow-left)
   (telephone-line-mode))
 
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package rainbow-mode
+  :hook (prog-mode . rainbow-mode))
+
 ;;; Evil/Keybinds
 (use-package general
   :config
