@@ -19,7 +19,7 @@
 (add-to-list 'default-frame-alist '(undecorated-round . t))
 (set-frame-parameter nil 'internal-border-width 10)
 (setq-default header-line-format " ")
-(set-face-attribute 'header-line  nil :inherit nil :background nil :height 0.2)
+(set-face-attribute 'header-line  nil :inherit nil :background nil :height 0.3)
 
 (use-package telephone-line
   :config
@@ -200,6 +200,28 @@
     "[f" 'textobj/prev-function
     "]f" 'textobj/next-function))
 
+;;; LSP
+(use-package eglot
+  :hook (python-mode . eglot-ensure))
+  
+;;; Flymake
+(use-package flymake
+  :config
+  (copy-face 'header-line 'header-line-flymake)
+  (set-face-attribute 'header-line-flymake nil :height 1.0)
+  :hook
+  (flymake-mode . (lambda ()
+		    (set (make-local-variable 'header-line)
+			 'header-line-flymake)))
+  :general
+  (:keymaps 'override :states '(normal motion emacs)
+    "[e"  'flymake-goto-prev-error
+    "]e"  'flymake-goto-next-error)
+  (:keymaps 'override :states '(normal motion emacs) :prefix evil-leader
+    "q"   'flymake-show-buffer-diagnostics)
+  (:keymaps 'flymake-diagnostics-buffer-mode-map :states 'normal
+    "TAB" 'flymake-show-diagnostic))
+  
 ;;; Emacs Lisp
 (use-package lisp-mode
   :ensure nil
