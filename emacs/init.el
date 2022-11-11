@@ -101,6 +101,14 @@
   (evil-goggles-mode)
   (evil-goggles-use-magit-faces))
 
+(use-package avy
+  :general
+  (:keymaps '(evil-normal-state-map evil-motion-state-map)
+    "s" 'avy-goto-char-timer
+    "S" 'avy-resume
+    "[s" 'avy-prev
+    "]s" 'avy-next))
+
 (use-package which-key
   :config (which-key-mode))
 
