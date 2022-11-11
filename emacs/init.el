@@ -56,7 +56,6 @@
   (:keymaps 'key-translation-map "ESC" "C-g")
 
   (:keymaps 'override :states '(normal motion) :prefix evil-leader
-    "u"   'universal-argument
     "h"   'help-command
     "w"   'evil-window-map
 
@@ -76,6 +75,7 @@
     "nw"  'widen)
 
   (:keymaps 'override :states '(normal insert motion emacs)
+    "s-u" 'universal-argument
     "C-h" 'evil-window-left
     "C-j" 'evil-window-down
     "C-k" 'evil-window-up
@@ -108,6 +108,12 @@
     "S" 'avy-resume
     "[s" 'avy-prev
     "]s" 'avy-next))
+
+(use-package expand-region
+  :general
+  (:keymaps '(evil-normal-state-map evil-motion-state-map)
+	    "s-k" 'er/expand-region
+	    "s-j" 'er/contract-region))
 
 (use-package which-key
   :config (which-key-mode))
