@@ -172,6 +172,34 @@
   (:keymaps 'vterm-mode-map :states '(normal insert motion)
     "C-q" 'evil-quit))
 
+;;; Tree-sitter
+(use-package tree-sitter
+  :config (global-tree-sitter-mode)
+  :hook (tree-sitter-after-on . tree-sitter-hl-mode))
+
+(use-package tree-sitter-langs)
+
+(use-package evil-textobj-tree-sitter
+  :config
+  (defun textobj/prev-function ()
+    (interactive)
+    (if tree-sitter-mode
+	(evil-textobj-tree-sitter-goto-textobj "function.outer" t)
+      (beginning-of-defun)))
+  (defun textobj/next-function ()
+    (interactive)
+    (if tree-sitter-mode
+	(evil-textobj-tree-sitter-goto-textobj "function.outer")
+      (end-of-defun)))
+  :general
+  (:keymaps 'evil-inner-text-objects-map
+    "f" (evil-textobj-tree-sitter-get-textobj "function.inner"))
+  (:keymaps 'evil-outer-text-objects-map
+    "f" (evil-textobj-tree-sitter-get-textobj "function.outer"))
+  (:keymaps 'override :states '(normal motion)
+    "[f" 'textobj/prev-function
+    "]f" 'textobj/next-function))
+
 ;;; Emacs Lisp
 (use-package lisp-mode
   :ensure nil
