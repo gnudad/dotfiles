@@ -147,6 +147,12 @@
   :hook
   (prog-mode . (lambda () (setq truncate-lines t))))
 
+(use-package vertico
+  :init (vertico-mode))
+
+(use-package marginalia
+  :init (marginalia-mode))
+
 ;;; Startup
 (setq inhibit-startup-screen t)
 (find-file "~/dotfiles/emacs/init.el")
