@@ -1,0 +1,12 @@
+tap "homebrew/bundle"
+tap "homebrew/core"
+
+tap "homebrew/cask"
+cask "hammerspoon"
+cask "macvim"
+
+tap "homebrew/cask-fonts"
+cask "font-jetbrains-mono"
+
+tap "d12frosted/emacs-plus"
+brew "d12frosted/emacs-plus/emacs-plus@29", args: ["with-native-comp", "with-xwidgets", "with-memeplex-wide-icon"]

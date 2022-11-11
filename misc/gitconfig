@@ -1,0 +1,4 @@
+[core]
+	excludesfile = ~/dotfiles/misc/gitignore
+[init]
+	defaultBranch = main

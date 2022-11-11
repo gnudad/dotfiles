@@ -1,0 +1,5 @@
+set guifont=Jetbrains\ Mono:h16
+set nowrap
+set number
+set relativenumber
+set ruler

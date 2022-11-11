@@ -1,0 +1,23 @@
+# Install Homebrew and packages
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew bundle --file=~/dotfiles/misc/Brewfile
+
+# Link Emacs.app to /Applications in a way that Spotlight will find it
+osascript -e 'tell application "Finder" to make alias file to POSIX file "/opt/homebrew/opt/emacs-plus@29/Emacs.app" at POSIX file "/Applications"'
+
+# Fix font rendering in Emacs on macOS
+defaults write org.gnu.Emacs AppleFontSmoothing -int 0
+
+# Remap Caps Lock to F18 (https://hidutil-generator.netlify.app)
+hidutil property --set '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039, "HIDKeyboardModifierMappingDst":0x70000006D}]}'
+ln -sf ~/dotfiles/hammerspoon/KeyRemapping.plist ~/Library/LaunchAgents/com.local.KeyRemapping.plist
+
+# Change default location of Hammerspoon config
+defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
+
+# Symlink dotfiles
+ln -s ~/dotfiles/emacs ~/.config/emacs
+ln -s ~/dotfiles/hammerspoon ~/.config/hammerspoon
+ln -s ~/dotfiles/misc/gitconfig ~/.gitconfig
+ln -s ~/dotfiles/misc/vimrc ~/.vimrc
+ln -s ~/dotfiles/misc/zprofile ~/.zprofile
