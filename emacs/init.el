@@ -91,6 +91,16 @@
   :custom (evil-collection-want-unimpaired-p nil)
   :config (evil-collection-init))
 
+(use-package evil-surround
+  :config (global-evil-surround-mode))
+
+(use-package evil-goggles
+  :init
+  (setq evil-goggles-duration 0.5)
+  :config
+  (evil-goggles-mode)
+  (evil-goggles-use-magit-faces))
+
 (use-package which-key
   :config (which-key-mode))
 
