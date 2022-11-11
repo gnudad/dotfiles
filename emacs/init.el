@@ -166,6 +166,54 @@
   (:keymaps 'outline-minor-mode-map
     "z0" 'outline-show-only-headings))
 
+;;; Org
+(use-package org
+  ;; TODO: Org Capture settings and keybind
+  ;; TODO: Separate agenda keybinds for Home, Code, Work
+  ;; TODO: Show Apple Calendar events in org-agenda
+  :init
+  (setq
+   org-agenda-files (list "~/Library/Mobile Documents/com~apple~CloudDocs/org")
+   org-todo-keywords
+     '((type "TODO(t)" "PROJ(p)" "WAIT(w)" "MEET(m)" "|" "DONE(d)" "CANC(c)"))
+   org-startup-indented t
+   org-startup-folded 'content
+   org-tags-column 0
+   org-agenda-tags-column 0
+   org-scheduled-string "REQ:"
+   org-agenda-scheduled-leaders '("REQ: " "REQ.%2dx: ")
+   org-scheduled-past-days 0
+   org-agenda-skip-scheduled-if-done t
+   org-deadline-string "DUE:"
+   org-agenda-deadline-leaders '("DUE: " "In %3d d.: " "%2d d. ago: ")
+   org-deadline-warning-days 0
+   org-agenda-skip-deadline-if-done t
+   org-log-done 'time
+   org-log-done-with-time nil
+   org-agenda-sorting-strategy '(
+     (agenda todo-state-down deadline-up scheduled-up ts-up)
+     (todo priority-down category-keep)
+     (tags priority-down category-keep)
+     (search category-keep))
+   org-agenda-start-with-log-mode '(closed)
+   org-agenda-use-time-grid nil
+   org-bookmark-names-plist nil)
+  :general
+  (:keymaps 'org-mode-map
+    "z0" 'outline-show-only-headings)
+  (:keymaps 'override :states '(normal motion) :prefix evil-leader
+    "oa" 'org-agenda))
+
+(use-package evil-org
+  :init
+  (setq evil-org-key-theme
+	'(textobjects insert navigation additional shift todo heading))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys)
+  :hook
+  (org-mode . (lambda() (evil-org-mode t))))
+
 ;;; Misc
 (use-package emacs
   :init
