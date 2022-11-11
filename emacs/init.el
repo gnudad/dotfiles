@@ -95,8 +95,6 @@
   :config (global-evil-surround-mode))
 
 (use-package evil-goggles
-  :init
-  (setq evil-goggles-duration 0.5)
   :config
   (evil-goggles-mode)
   (evil-goggles-use-magit-faces))
@@ -222,6 +220,18 @@
   (:keymaps 'flymake-diagnostics-buffer-mode-map :states 'normal
     "TAB" 'flymake-show-diagnostic))
   
+;;; Completion
+(use-package corfu
+  :custom
+  (corfu-auto t)
+  :init
+  (global-corfu-mode))
+
+(use-package cape
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file))
+
 ;;; Emacs Lisp
 (use-package lisp-mode
   :ensure nil
@@ -289,6 +299,7 @@
 	ring-bell-function 'ignore)
   (pixel-scroll-precision-mode)
   (scroll-bar-mode -1)
+  (electric-pair-mode)
   (put 'narrow-to-region 'disabled nil)
   :hook
   (prog-mode . (lambda () (setq truncate-lines t))))
