@@ -12,6 +12,7 @@
 
 ;;; Appearance
 (set-face-attribute 'default nil :font "JetBrains Mono" :height 200)
+(set-face-attribute 'fringe  nil :background nil)
 (add-to-list 'default-frame-alist '(undecorated-round . t))
 
 ;;; Evil/Keybinds
@@ -49,7 +50,7 @@
     "ns"  'org-narrow-to-subtree
     "nw"  'widen)
 
-  (:keymaps 'override
+  (:keymaps 'override :states '(normal insert motion emacs)
     "C-h" 'evil-window-left
     "C-j" 'evil-window-down
     "C-k" 'evil-window-up
@@ -57,26 +58,57 @@
 
   (:keymaps 'override :states 'normal :prefix evil-leader
     "/"   'comment-line)
+
   (:keymaps 'override :states 'motion :prefix evil-leader
     "/"   'comment-dwim))
 
 (use-package evil-collection
+  :custom (evil-collection-want-unimpaired-p nil)
   :config (evil-collection-init))
 
 (use-package which-key
   :config (which-key-mode))
 
-;;; Git/Project
-(use-package magit
-  :config (setq magit-display-buffer-function
-		'magit-display-buffer-same-window-except-diff-v1))
-
+;;; Projects
 (use-package project
   :general
   (:keymaps 'override :states '(normal motion) :prefix evil-leader
     "p" project-prefix-map)
   (:keymaps 'project-prefix-map
     "TAB" 'project-switch-to-buffer))
+
+;;; Git
+(use-package magit
+  :config
+  (setq magit-display-buffer-function
+	'magit-display-buffer-same-window-except-diff-v1)
+  :general
+  (:keymaps 'override :states '(normal motion) :prefix evil-leader
+    "gg" 'magit-status)
+  (:keymaps '(magit-status-mode-map magit-diff-mode-map)
+    "s-k" 'magit-section-backward
+    "s-j" 'magit-section-forward))
+
+(use-package git-gutter
+  :after magit
+  :config
+  (setq git-gutter:update-interval 0.1)
+  (global-git-gutter-mode)
+  :general
+  (:keymaps 'override :states '(normal motion) :prefix evil-leader
+    "gm" 'git-gutter:mark-hunk
+    "gp" 'git-gutter:popup-hunk
+    "gr" 'git-gutter:revert-hunk
+    "gs" 'git-gutter:stage-hunk)
+  (:keymaps 'override :states '(normal motion)
+    "[g" 'git-gutter:previous-hunk
+    "]g" 'git-gutter:next-hunk))
+
+(use-package git-gutter-fringe
+  :config
+  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 ;;; Misc
 (use-package emacs
