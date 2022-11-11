@@ -11,9 +11,24 @@
   (setq use-package-always-ensure t))
 
 ;;; Appearance
+(use-package nord-theme
+  :config (load-theme 'nord t))
+
 (set-face-attribute 'default nil :font "JetBrains Mono" :height 200)
 (set-face-attribute 'fringe  nil :background nil)
 (add-to-list 'default-frame-alist '(undecorated-round . t))
+(set-frame-parameter nil 'internal-border-width 10)
+(setq-default header-line-format " ")
+(set-face-attribute 'header-line  nil :inherit nil :background nil :height 0.2)
+
+(use-package telephone-line
+  :config
+  (setq
+   telephone-line-primary-left-separator 'telephone-line-identity-right
+   telephone-line-secondary-left-separator 'telephone-line-identity-hollow-right
+   telephone-line-primary-right-separator 'telephone-line-identity-left
+   telephone-line-secondary-right-separator 'telephone-line-identity-hollow-left)
+  (telephone-line-mode))
 
 ;;; Evil/Keybinds
 (use-package general)
@@ -90,7 +105,6 @@
     "s-j" 'magit-section-forward))
 
 (use-package git-gutter
-  :after magit
   :config
   (setq git-gutter:update-interval 0.1)
   (global-git-gutter-mode)
