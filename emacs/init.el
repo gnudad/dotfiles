@@ -257,7 +257,7 @@
   ;; TODO: Show Apple Calendar events in org-agenda
   :init
   (setq
-   org-agenda-files (list "~/Library/Mobile Documents/com~apple~CloudDocs/org")
+   org-agenda-files (list "~/Library/Mobile Documents/com~apple~CloudDocs/org/")
    org-todo-keywords
      '((type "TODO(t)" "PROJ(p)" "WAIT(w)" "MEET(m)" "|" "DONE(d)" "CANC(c)"))
    org-startup-indented t
@@ -286,7 +286,10 @@
   (:keymaps 'org-mode-map
     "z0" 'outline-show-only-headings)
   (:keymaps 'override :states '(normal motion) :prefix evil-leader
-    "oa" 'org-agenda))
+	    "oa" 'org-agenda
+	    "of" '(lambda ()
+		   (interactive)
+		   (ido-find-file-in-dir (car org-agenda-files)))))
 
 (use-package evil-org
   :init
