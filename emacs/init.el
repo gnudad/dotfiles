@@ -28,6 +28,15 @@
    telephone-line-secondary-left-separator 'telephone-line-identity-hollow-right
    telephone-line-primary-right-separator 'telephone-line-identity-left
    telephone-line-secondary-right-separator 'telephone-line-identity-hollow-left)
+  (custom-set-faces
+   `(telephone-line-evil-normal   ((t (:foreground "black" :background "#81A1C1"))))
+   `(telephone-line-evil-insert   ((t (:foreground "black" :background "#A3BE8C"))))
+   `(telephone-line-evil-visual   ((t (:foreground "black" :background "#D08770"))))
+   `(telephone-line-evil-replace  ((t (:foreground "white" :background "#BF616A"))))
+   `(telephone-line-evil-operator ((t (:foreground "black" :background "#B48EAD"))))
+   `(telephone-line-evil-motion   ((t (:foreground "black" :background "#D8DEE9"))))
+   `(telephone-line-evil-emacs    ((t (:foreground "white" :background "#4E1D6B"))))
+   )
   (telephone-line-mode))
 
 (use-package rainbow-delimiters
