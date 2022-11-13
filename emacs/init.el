@@ -286,13 +286,21 @@
    org-agenda-use-time-grid nil
    org-bookmark-names-plist nil)
   :general
-  (:keymaps 'org-mode-map
-    "z0" 'outline-show-only-headings)
+  (:keymaps 'org-mode-map :states 'normal
+    "z0"  'outline-show-only-headings
+    "s-k" 'org-metaup
+    "s-j" 'org-metadown)
+  (:keymaps 'org-mode-map :states '(normal insert)
+    "s-<return>" 'evil-org-org-insert-todo-heading-below)
+  (:keymaps 'org-mode-map :states 'normal :prefix evil-leader
+    "s"   'org-schedule
+    "d"   'org-deadline)
   (:keymaps 'override :states '(normal motion) :prefix evil-leader
-	    "oa" 'org-agenda
-	    "of" '(lambda ()
-		   (interactive)
-		   (ido-find-file-in-dir (car org-agenda-files)))))
+    "oa" 'org-agenda
+    "of" '(lambda ()
+	   (interactive)
+	   (ido-find-file-in-dir (car org-agenda-files)))
+    "os" 'org-occur-in-agenda-files))
 
 (use-package evil-org
   :init
