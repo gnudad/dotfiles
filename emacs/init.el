@@ -257,6 +257,7 @@
   :init
   (setq
    org-agenda-files (list "~/Library/Mobile Documents/com~apple~CloudDocs/org/")
+   org-agenda-window-setup 'current-window
    org-todo-keywords
      '((type "TODO(t)" "PROJ(p)" "WAIT(w)" "MEET(m)" "|" "DONE(d)" "CANC(c)"))
    org-startup-indented t
