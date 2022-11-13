@@ -16,7 +16,6 @@
   (load-theme 'nord t)
   (set-face-attribute 'default nil :font "JetBrains Mono" :height 200)
   (set-face-attribute 'fringe  nil :background nil)
-  (add-to-list 'default-frame-alist '(undecorated-round . t))
   (set-frame-parameter nil 'internal-border-width 10)
   (setq-default header-line-format " ")
   (set-face-attribute 'header-line  nil :inherit nil :background nil :height 0.3))
@@ -315,7 +314,6 @@
 	frame-resize-pixelwise t
 	ring-bell-function 'ignore)
   (pixel-scroll-precision-mode)
-  (scroll-bar-mode -1)
   (electric-pair-mode)
   (put 'narrow-to-region 'disabled nil)
   :hook
