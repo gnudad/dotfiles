@@ -232,19 +232,15 @@
 
 ;;; Flymake
 (use-package flymake
-  :config
-  (copy-face 'header-line 'header-line-flymake)
-  (set-face-attribute 'header-line-flymake nil :height 1.0)
-  :hook
-  (flymake-mode . (lambda ()
-		    (set (make-local-variable 'header-line)
-			 'header-line-flymake)))
   :general
   (:keymaps 'override :states '(normal motion emacs)
     "[e"  'flymake-goto-prev-error
     "]e"  'flymake-goto-next-error)
   (:keymaps 'override :states '(normal motion emacs) :prefix evil-leader
-    "q"   'flymake-show-buffer-diagnostics)
+    "q"   (lambda ()
+	    (interactive)
+	    (flymake-show-buffer-diagnostics)
+	    (other-window 1)))
   (:keymaps 'flymake-diagnostics-buffer-mode-map :states 'normal
     "TAB" 'flymake-show-diagnostic))
   
@@ -253,7 +249,7 @@
   :ensure nil
   :hook (emacs-lisp-mode . outline-minor-mode)
   :general
-  (:keymaps 'outline-minor-mode-map
+  (:keymaps 'outline-minor-mode-map :states 'normal
     "z0" 'outline-show-only-headings))
 
 ;;; Org
@@ -320,6 +316,7 @@
 	custom-file "custom.el"
 	delete-section-mode t
 	frame-resize-pixelwise t
+	help-window-select t
 	ring-bell-function 'ignore)
   (pixel-scroll-precision-mode)
   (electric-pair-mode)
