@@ -327,6 +327,18 @@
 (use-package marginalia
   :init (marginalia-mode))
 
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file  (styles basic partial-completion))))
+  :config
+  (defun company-completion-styles (capf-fn &rest args)
+    (let ((completion-styles '(basic partial-completion)))
+      (apply capf-fn args))
+    (advice-add 'company-capf :around #'company-completion-styles)
+    (advice-add 'company-dabbrev :around #'company-completion-styles)
+    (advice-add 'company-files :around #'company-completion-styles)))
+
 ;;; Startup
 (setq inhibit-startup-screen t)
 (find-file "~/dotfiles/emacs/init.el")
