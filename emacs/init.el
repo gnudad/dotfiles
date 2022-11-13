@@ -210,8 +210,27 @@
 
 ;;; LSP
 (use-package eglot
+  :config (setq eglot-stay-out-of '(company))
   :hook (python-mode . eglot-ensure))
   
+;;; Completion
+(use-package company
+  :config
+  (setq company-backends '((company-capf company-dabbrev company-files))
+	company-dabbrev-downcase nil
+	company-transformers '(delete-dups
+			       company-sort-by-occurrence
+			       company-sort-prefer-same-case-prefix))
+  :general
+  (:keymaps 'company-active-map
+    [tab]    'company-complete-selection
+    "`"      'company-complete-common
+    "ESC"    'company-abort
+    [return] 'evil-ret
+    "RET"    'evil-ret)
+  :hook
+  (after-init . global-company-mode))
+
 ;;; Flymake
 (use-package flymake
   :config
@@ -230,18 +249,6 @@
   (:keymaps 'flymake-diagnostics-buffer-mode-map :states 'normal
     "TAB" 'flymake-show-diagnostic))
   
-;;; Completion
-(use-package corfu
-  :custom
-  (corfu-auto t)
-  :init
-  (global-corfu-mode))
-
-(use-package cape
-  :init
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file))
-
 ;;; Emacs Lisp
 (use-package lisp-mode
   :ensure nil
@@ -252,9 +259,6 @@
 
 ;;; Org
 (use-package org
-  ;; TODO: Org Capture settings and keybind
-  ;; TODO: Separate agenda keybinds for Home, Code, Work
-  ;; TODO: Show Apple Calendar events in org-agenda
   :init
   (setq
    org-agenda-files (list "~/Library/Mobile Documents/com~apple~CloudDocs/org/")
