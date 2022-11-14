@@ -289,8 +289,10 @@
   :general
   (:keymaps 'org-mode-map :states 'normal
     "z0"  'outline-show-only-headings
+    "s-h" 'org-metaleft
     "s-k" 'org-metaup
-    "s-j" 'org-metadown)
+    "s-j" 'org-metadown
+    "s-l" 'org-metaright)
   (:keymaps 'org-mode-map :states '(normal insert)
     "s-<return>" 'evil-org-org-insert-todo-heading-below)
   (:keymaps 'org-mode-map :states 'normal :prefix evil-leader
