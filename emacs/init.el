@@ -127,6 +127,10 @@
 
 ;;; Projects
 (use-package project
+  :custom
+  (project-switch-commands '((project-find-file "Find file" "f")
+			     (project-dired "Dired" "d")
+			     (vterm "Vterm" "t")))
   :general
   (:keymaps 'override :states '(normal motion) :prefix evil-leader
     "p" project-prefix-map)
