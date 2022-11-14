@@ -125,6 +125,11 @@
 (use-package which-key
   :config (which-key-mode))
 
+;;; Dired
+(use-package dired
+  :ensure nil
+  :init (setq delete-by-moving-to-trash t))
+
 ;;; Projects
 (use-package project
   :custom
