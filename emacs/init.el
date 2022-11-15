@@ -261,6 +261,12 @@
   (:keymaps 'outline-minor-mode-map :states 'normal
     "z0" 'outline-show-only-headings))
 
+;;; Lua
+(use-package lua-mode
+  :config
+  (setq lua-indent-level 2
+	lua-indent-nested-block-content-align nil))
+
 ;;; Org
 (use-package org
   :init
@@ -291,6 +297,12 @@
    org-agenda-start-with-log-mode '(closed)
    org-agenda-use-time-grid nil
    org-bookmark-names-plist nil)
+  :config
+  ;; Open Mail.app email links
+  (org-add-link-type "message"
+    (lambda (id)
+      (shell-command
+	(concat "open message:" id))))
   :general
   (:keymaps 'org-mode-map :states 'normal
     "z0"  'outline-show-only-headings
@@ -300,6 +312,8 @@
     "s-l" 'org-metaright)
   (:keymaps 'org-mode-map :states '(normal insert)
     "s-<return>" 'evil-org-org-insert-todo-heading-below)
+  (:keymaps 'org-mode-map :states 'normal
+    "gx" 'org-open-at-point)
   (:keymaps 'org-mode-map :states 'normal :prefix evil-leader
     "s"   'org-schedule
     "d"   'org-deadline)

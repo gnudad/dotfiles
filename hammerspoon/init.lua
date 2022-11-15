@@ -127,6 +127,22 @@ map('n', function() keyStroke({M},   'g', true) end)
 map('N', function() keyStroke({S,M}, 'g', true) end)
 
 
+-- Copy Mail.app message org-link
+hyperBind('cmd', 'm', function()
+  local script = [[
+    tell application "Mail"
+      set emails to selection
+      set email to item 1 of emails
+      set msgid to message id of email
+      set subj to subject of email
+      set orgLink to "[[message://%3c" & msgid & "%3e][" & subj & "]" & "]"
+      set the clipboard to orgLink
+    end tell
+  ]]
+  hs.osascript.applescript(script)
+  hs.alert("Copied org-link to clipboard")
+end)
+
 -- Reload Hammerspoon
 hyperBind('cmd', 'r', hs.reload)
 
