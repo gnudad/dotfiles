@@ -191,7 +191,7 @@
 ;;; Tree-sitter
 (use-package tree-sitter
   :config (global-tree-sitter-mode)
-  :hook (tree-sitter-after-on . tree-sitter-hl-mode))
+  :hook (python-mode . tree-sitter-hl-mode))
 
 (use-package tree-sitter-langs)
 
@@ -266,6 +266,15 @@
   :config
   (setq lua-indent-level 2
 	lua-indent-nested-block-content-align nil))
+
+;;; Python
+(use-package python-mode)
+
+(use-package poetry
+  :hook (python-mode . poetry-tracking-mode))
+
+;;; PHP
+(use-package php-mode)
 
 ;;; Org
 (use-package org
