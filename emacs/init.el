@@ -288,24 +288,37 @@
    org-startup-folded 'content
    org-tags-column 0
    org-agenda-tags-column 0
-   org-scheduled-string "REQ:"
-   org-agenda-scheduled-leaders '("REQ: " "REQ.%2dx: ")
    org-scheduled-past-days 0
-   org-agenda-skip-scheduled-if-done t
-   org-deadline-string "DUE:"
-   org-agenda-deadline-leaders '("DUE: " "In %3d d.: " "%2d d. ago: ")
    org-deadline-warning-days 0
    org-agenda-skip-deadline-if-done t
    org-log-done 'time
    org-log-done-with-time nil
+   org-log-into-drawer t
+   org-agenda-show-future-repeats nil
    org-agenda-sorting-strategy '(
      (agenda todo-state-down deadline-up scheduled-up ts-up)
      (todo priority-down category-keep)
      (tags priority-down category-keep)
      (search category-keep))
-   org-agenda-start-with-log-mode '(closed)
+   org-agenda-start-with-log-mode '(closed state)
    org-agenda-use-time-grid nil
    org-bookmark-names-plist nil)
+  (setq org-agenda-custom-commands
+	'(("n" "Agenda and all TODOs"
+	   ((agenda "")
+	    (alltodo "")))
+	  ("c" "Code"
+	   ((agenda "")
+	    (alltodo ""))
+	   ((org-agenda-files (list (concat (car org-agenda-files) "/Code.org")))))
+	  ("h" "Home"
+	   ((agenda "")
+	    (alltodo ""))
+	   ((org-agenda-files (list (concat (car org-agenda-files) "/Home.org")))))
+	  ("w" "Work"
+	   ((agenda "")
+	    (alltodo ""))
+	   ((org-agenda-files (list (concat (car org-agenda-files) "/Work.org")))))))
   :config
   ;; Open Mail.app email links
   (org-add-link-type "message"
