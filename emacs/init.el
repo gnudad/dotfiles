@@ -55,12 +55,11 @@
   :init
   (defconst evil-leader "SPC")
   (setq evil-want-C-u-scroll t
-	evil-want-keybinding nil)
-  (modify-syntax-entry ?_ "w")
-
+        evil-want-keybinding nil)
   :config
   (evil-mode)
-
+  :hook
+  (prog-mode . (lambda () (modify-syntax-entry ?_ "w")))
   :general
   (:keymaps 'key-translation-map "ESC" "C-g")
 
