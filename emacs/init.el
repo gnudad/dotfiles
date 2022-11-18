@@ -267,7 +267,8 @@
 	lua-indent-nested-block-content-align nil))
 
 ;;; Python
-(use-package python-mode)
+(use-package python
+  :hook (python-mode . (lambda () (setq tab-width python-indent-offset))))
 
 (use-package poetry
   :hook (python-mode . poetry-tracking-mode))
@@ -359,12 +360,14 @@
 (use-package emacs
   :init
   (setq auto-save-default nil
-	backup-inhibited t
-	custom-file "custom.el"
-	delete-section-mode t
-	frame-resize-pixelwise t
-	help-window-select t
-	ring-bell-function 'ignore)
+        backup-inhibited t
+        backward-delete-char-untabify-method 'hungry
+        custom-file "custom.el"
+        delete-section-mode t
+        frame-resize-pixelwise t
+        help-window-select t
+        ring-bell-function 'ignore
+        tab-always-indent nil)
   (pixel-scroll-precision-mode)
   (electric-pair-mode)
   (put 'narrow-to-region 'disabled nil)
