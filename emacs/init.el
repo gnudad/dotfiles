@@ -60,6 +60,7 @@
   (evil-mode)
   :hook
   (prog-mode . (lambda () (modify-syntax-entry ?_ "w")))
+  (sql-mode . (lambda () (modify-syntax-entry ?_ "w" (sql-mode-syntax-table))))
   :general
   (:keymaps 'key-translation-map "ESC" "C-g")
 
