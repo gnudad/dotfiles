@@ -367,7 +367,10 @@
         delete-section-mode t
         frame-resize-pixelwise t
         help-window-select t
+	hscroll-step 1
         ring-bell-function 'ignore
+	scroll-conservatively 101
+	scroll-margin 3
         tab-always-indent nil)
   (pixel-scroll-precision-mode)
   (electric-pair-mode)
