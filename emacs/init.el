@@ -100,13 +100,17 @@
   :custom (evil-collection-want-unimpaired-p nil)
   :config (evil-collection-init))
 
-(use-package evil-surround
-  :config (global-evil-surround-mode))
-
 (use-package evil-goggles
   :config
   (evil-goggles-mode)
   (evil-goggles-use-magit-faces))
+
+(use-package evil-matchit
+  :init (setq evilmi-shortcut "M")
+  :config (global-evil-matchit-mode 1))
+
+(use-package evil-surround
+  :config (global-evil-surround-mode))
 
 (use-package avy
   :general
