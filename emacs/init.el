@@ -382,8 +382,9 @@
 	scroll-margin 3
         tab-always-indent nil)
   (pixel-scroll-precision-mode)
-  (electric-pair-mode)
   (put 'narrow-to-region 'disabled nil)
+  (setq-default electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
+  (electric-pair-mode)
   :hook
   (prog-mode . (lambda () (setq truncate-lines t))))
 
