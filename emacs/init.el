@@ -269,7 +269,12 @@
 
 ;;; Python
 (use-package python
-  :hook (python-mode . (lambda () (setq tab-width python-indent-offset))))
+  :hook
+  (python-mode . (lambda ()
+		   (setq tab-width python-indent-offset)
+		   ;; Fix tree-sitter syntax highlighting of triple-quoted strings
+		   (face-remap-add-relative 'tree-sitter-hl-face:doc
+					    :inherit 'tree-sitter-face:string))))
 
 (use-package poetry
   :hook (python-mode . poetry-tracking-mode))
