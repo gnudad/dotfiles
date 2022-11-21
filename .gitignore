@@ -3,4 +3,5 @@ emacs/custom.el
 emacs/eln-cache/
 emacs/elpa/
 emacs/projects
+emacs/tramp
 emacs/transient/

@@ -132,7 +132,18 @@
 ;;; Dired
 (use-package dired
   :ensure nil
-  :init (setq delete-by-moving-to-trash t))
+  :general
+  (:keymaps 'override :states '(normal motion) :prefix evil-leader
+    "d" 'dired))
+
+(use-package async
+  :config (dired-async-mode))
+
+(use-package osx-trash
+  :config
+  (when (eq system-type 'darwin)
+    (osx-trash-setup))
+  (setq delete-by-moving-to-trash t))
 
 ;;; Projects
 (use-package project
