@@ -14,11 +14,14 @@
 (use-package nord-theme
   :config
   (load-theme 'nord t)
-  (set-face-attribute 'default nil :font "JetBrains Mono" :height 200)
-  (set-face-attribute 'fringe  nil :background nil)
+  (set-face-attribute 'default nil
+		      :background "#272d39"
+		      :font "JetBrains Mono" :height 200)
+  (set-face-attribute 'fringe  nil :background "#272d39")
   (set-frame-parameter nil 'internal-border-width 10)
   (setq-default header-line-format " ")
-  (set-face-attribute 'header-line  nil :inherit nil :background nil :height 0.3))
+  (set-face-attribute 'header-line  nil :inherit nil
+		      :background "#272d39" :height 0.3))
 
 (use-package telephone-line
   :config
@@ -341,6 +344,7 @@
 	    (alltodo ""))
 	   ((org-agenda-files (list (concat (car org-agenda-files) "/Work.org")))))))
   :config
+  (set-face-attribute 'org-hide nil :background "#272d39" :foreground "#272d39")
   ;; Open Mail.app email links
   (org-add-link-type "message"
     (lambda (id)
