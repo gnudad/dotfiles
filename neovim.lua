@@ -128,20 +128,13 @@ require("lazy").setup({
   },
   { "NeogitOrg/neogit",
     dependencies = "nvim-lua/plenary.nvim",
-    config = function()
-      require("neogit").setup({
-        disable_insert_on_commit = true,
-        sections = {
-          untracked = { folded = true },
-        },
-        console_timeout = 5000,
-      })
-      -- Enable spell checking in commit buffers
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "gitcommit", "NeogitCommitMessage" },
-        callback = function() vim.opt_local.spell = true end
-      })
-    end,
+    opts = {
+      disable_insert_on_commit = true,
+      console_timeout = 5000,
+      sections = {
+        untracked = { folded = true },
+      },
+    },
     keys = {{ "<leader>gg", [[<cmd>silent wa<cr><cmd>Neogit kind=replace<cr>]] }},
   },
   { "tpope/vim-fugitive", keys = {{ "<leader>gb", [[<cmd>Git blame<cr>]] }} },
