@@ -31,6 +31,7 @@ if [[ $(uname) == "Darwin" ]]; then
     if [[ ! -d ~/dotfiles ]]; then
         git clone git@github.com:gnudad/dotfiles.git ~/dotfiles
         ln -sf ~/dotfiles/zshrc ~/.zshrc
+        touch ~/.hushlogin
     fi
     if [[ ! -d ~/.config/hammerspoon ]]; then
         defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
