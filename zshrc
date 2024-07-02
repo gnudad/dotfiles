@@ -35,7 +35,7 @@ if [[ $(uname) == "Darwin" ]]; then
     if [[ ! -d ~/.config/hammerspoon ]]; then
         defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
         mkdir -p ~/.config/hammerspoon/Spoons
-        ln -sf ~/Code/dotfiles_new/hammerspoon.lua ~/.config/hammerspoon/init.lua
+        ln -sf ~/dotfiles/hammerspoon.lua ~/.config/hammerspoon/init.lua
         cd ~/.config/hammerspoon/Spoons
         git clone https://github.com/jasonrudolph/ControlEscape.spoon.git ~/.config/hammerspoon/Spoons/ControlEscape.spoon
     fi
