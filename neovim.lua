@@ -289,7 +289,13 @@ require("lazy").setup({
         })
       end
       if servers['ruff-lsp'] then
-        require("lspconfig").ruff_lsp.setup({})
+        require("lspconfig").ruff_lsp.setup({
+          ---@diagnostic disable-next-line: unused-local
+          on_attach = function(client, bufnr)
+            -- Prevent "No information available" from ruff-lsp on vim.lsp.buf.hover()
+            client.server_capabilities.hoverProvider = false
+          end,
+        })
       end
 
     end,
