@@ -54,6 +54,6 @@ elif [[ $(uname) == "Linux" ]]; then
     # TODO
 fi
 
-autoload -Uz compinit
-compinit
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' # smartcase completion
 eval "$(zoxide init zsh)"
