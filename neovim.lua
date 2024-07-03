@@ -532,11 +532,8 @@ require("lazy").setup({
       vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
     end,
   },
+  { "chrisgrieser/nvim-various-textobjs", opts = { useDefaultKeymaps = true } },
   { "wellle/targets.vim" },
-  { "kana/vim-textobj-entire", dependencies = "kana/vim-textobj-user" },
-  { "kana/vim-textobj-line", dependencies = "kana/vim-textobj-user" },
-  { "saihoooooooo/vim-textobj-space", dependencies = "kana/vim-textobj-user" },
-  { "michaeljsmith/vim-indent-object" },
   { "windwp/nvim-autopairs", event = "InsertEnter", config = true },
   { "windwp/nvim-ts-autotag", config = true },
   { "utilyre/sentiment.nvim", event = "VeryLazy", config = true },
