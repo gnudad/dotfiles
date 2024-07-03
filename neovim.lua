@@ -90,6 +90,7 @@ require("lazy").setup({
           { "icon", add_padding = true },
         },
         keymaps = {
+          ["<C-h>"] = false,
           ["<C-l>"] = false,
           ["<C-p>"] = "actions.preview",
           ["<C-r>"] = "actions.refresh",
@@ -151,6 +152,7 @@ require("lazy").setup({
     dependencies = {
       { "nvim-lua/plenary.nvim" },
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      { "jvgrootveld/telescope-zoxide" },
     },
     config = function()
       require("telescope").setup({
@@ -160,9 +162,21 @@ require("lazy").setup({
             i = { ["<C-t>"] = require("trouble.sources.telescope").open },
           },
         },
+        extensions = {
+          zoxide = {
+            mappings = {
+              default = {
+                after_action = function(selection)
+                  vim.cmd.edit(selection.path)
+                end,
+              },
+            },
+          },
+        },
       })
       require("telescope").load_extension("fzf")
       require("telescope").load_extension("projects")
+      require("telescope").load_extension("zoxide")
       require("telescope").load_extension("yank_history")
     end,
     keys = {
@@ -171,6 +185,7 @@ require("lazy").setup({
       { "<leader><tab>", [[<cmd>Telescope buffers sort_lastused=true<cr>]] },
       { "<leader>/", [[<cmd>Telescope live_grep<cr>]] },
       { "<leader>r", [[<cmd>Telescope resume<cr>]] },
+      { "<leader>z", [[<cmd>Telescope zoxide list<cr>]] },
       { "<leader>y", [[<cmd>Telescope yank_history<cr>]] },
     },
   },
