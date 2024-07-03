@@ -462,6 +462,14 @@ require("lazy").setup({
         auto_install = true,
         highlight = { enable = true },
         indent = { enable = true },
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = "<cr>",
+            node_incremental = "<cr>",
+            node_decremental = "<bs>",
+          },
+        },
       })
       vim.keymap.set("n", "<leader>i", [[<cmd>Inspect<cr>]])
     end,
