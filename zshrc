@@ -43,7 +43,8 @@ if [[ $(uname) == "Darwin" ]]; then
     if [[ ! -d ~/.config/kitty ]]; then
         mkdir -p ~/.config/kitty
         ln -sf ~/dotfiles/kitty.conf ~/.config/kitty/kitty.conf
-        echo "action launch --type=os-window -- \$EDITOR -- \$FILE_PATH" > ~/.config/kitty/launch-actions.conf
+        echo "protocol file" > ~/.config/kitty/launch-actions.conf
+        echo "action launch --type=os-window -- \$EDITOR -- \$FILE_PATH" >> ~/.config/kitty/launch-actions.conf
     fi
     if [[ ! -d ~/.config/nvim ]]; then
         mkdir -p ~/.config/nvim
