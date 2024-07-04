@@ -81,7 +81,10 @@ require("lazy").setup({
   },
   { "j-hui/fidget.nvim", opts = { notification = { override_vim_notify = true } } },
   { "stevearc/oil.nvim", lazy = false,
-    dependencies = "nvim-tree/nvim-web-devicons",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "ojroques/nvim-osc52",
+    },
     config = function()
       require("oil").setup({
         skip_confirm_for_simple_edits = true,
@@ -95,6 +98,9 @@ require("lazy").setup({
           ["<C-l>"] = false,
           ["<C-p>"] = "actions.preview",
           ["<C-r>"] = "actions.refresh",
+          ["<A-y>"] = function() require("osc52").copy(
+            require("oil").get_current_dir() .. require("oil").get_cursor_entry().name
+          ) end,
         },
         win_options = {
           winbar = "%{v:lua.require('oil').get_current_dir()}",
