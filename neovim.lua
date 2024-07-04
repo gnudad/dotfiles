@@ -11,6 +11,7 @@ vim.o.formatoptions = "cro/qnlj"
 vim.o.ignorecase = true
 vim.o.laststatus = 3
 vim.o.linebreak = true
+vim.o.pumheight = 7
 vim.o.scrolloff = 5
 vim.o.shiftwidth = 2
 vim.o.sidescrolloff = 5
@@ -27,7 +28,7 @@ vim.o.titlestring = "%{fnamemodify(getcwd(), ':t')}"
 vim.o.wrap = false
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -315,6 +316,15 @@ require("lazy").setup({
 
     end,
   },
+  { "folke/lazydev.nvim", ft = "lua",
+    dependencies = "Bilal2453/luvit-meta",
+    opts = {
+      library = {
+        { path = "luvit-meta/library", words = { "vim%.uv" } },
+        { path = "~/.config/hammerspoon/Spoons/EmmyLua.spoon/annotations" },
+      },
+    },
+  },
   { "smjonas/inc-rename.nvim",
     config = function()
       require("inc_rename").setup({})
@@ -344,6 +354,7 @@ require("lazy").setup({
       "hrsh7th/cmp-calc",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
+      "folke/lazydev.nvim",
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
       "nvim-autopairs",
@@ -382,15 +393,15 @@ require("lazy").setup({
           ["<C-d>"] = cmp.mapping.scroll_docs(4),
         }),
         sources = cmp.config.sources({
-          { name = "nvim_lsp", max_item_count = 5 },
-          { name = "luasnip",  max_item_count = 5},
-          { name = "path", max_item_count = 5,
-            option = { get_cwd = function() return vim.fn.getcwd() end },
-          },
+          { name = "nvim_lsp" },
+          { name = "lazydev" },
           { name = "buffer", max_item_count = 5,
             option = { get_bufnrs = function() return vim.api.nvim_list_bufs() end } },
+          { name = "path", option = { get_cwd = function() return vim.fn.getcwd() end } },
           { name = "calc" },
+          { name = "luasnip" },
         }),
+        ---@diagnostic disable-next-line: missing-fields
         matching = {
           disallow_fuzzy_matching = true,
         },
@@ -458,6 +469,7 @@ require("lazy").setup({
   },
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate",
     config = function()
+      ---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup({
         auto_install = true,
         highlight = { enable = true },
@@ -486,6 +498,7 @@ require("lazy").setup({
   { "nvim-treesitter/nvim-treesitter-textobjects",
     dependencies = "nvim-treesitter/nvim-treesitter",
     config = function()
+      ---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup({
         textobjects = {
           select = {
@@ -560,6 +573,7 @@ require("lazy").setup({
   { "kevinhwang91/nvim-ufo",
     dependencies = "kevinhwang91/promise-async",
     config = function()
+      ---@diagnostic disable-next-line: missing-fields
       require("ufo").setup({
         provider_selector = function()
           return { "treesitter", "indent" }

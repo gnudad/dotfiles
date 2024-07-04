@@ -1,4 +1,5 @@
 -- Caps Lock acts as Esc when tapped, Ctrl when held
+---@diagnostic disable-next-line: undefined-field
 hs.loadSpoon("ControlEscape"):start()
 
 -- Window Movement
@@ -72,6 +73,10 @@ hs.hotkey.bind({ "ctrl", "cmd" }, "m", function()
     .. tostring(hs.host.interfaceStyle() ~= "Dark")
   )
 end)
+
+-- Hammerspoon annotations for lua language server
+local f = io.open("Spoons/EmmyLua.spoon/annotations/hs.lua")
+if f ~= nil then io.close(f) else hs.loadSpoon("EmmyLua") end
 
 -- Reload Hammerspoon
 hs.hotkey.bind({ "ctrl", "cmd" }, "r", hs.reload)
