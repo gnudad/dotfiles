@@ -96,7 +96,11 @@ local function resize(delta)
     end
     frame.h = math.min(frame.h + delta, screen.h)
   end
+  -- Disable animation while resizing
+  local animationDuration = hs.window.animationDuration
+  hs.window.animationDuration = 0
   hs.window.focusedWindow():setFrame(frame)
+  hs.window.animationDuration = animationDuration
 end
 hs.hotkey.bind({ "ctrl", "cmd" }, "=", function() resize(100) end)
 hs.hotkey.bind({ "ctrl", "cmd" }, "-", function() resize(-100) end)
