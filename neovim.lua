@@ -136,6 +136,15 @@ require("lazy").setup({
   },
   { "NeogitOrg/neogit",
     dependencies = "nvim-lua/plenary.nvim",
+    init = function()
+      vim.api.nvim_create_autocmd("InsertEnter", {
+        callback = function()
+          if vim.bo.filetype == "NeogitCommitMessage" or vim.bo.filetype == "gitcommit" then
+            vim.opt_local.spell = true
+          end
+        end,
+      })
+    end,
     config = function()
       require("neogit").setup({
         disable_insert_on_commit = true,
@@ -143,13 +152,6 @@ require("lazy").setup({
         sections = {
           untracked = { folded = true, hidden = false },
         },
-      })
-      vim.api.nvim_create_autocmd("InsertEnter", {
-        callback = function()
-          if vim.bo.filetype == "NeogitCommitMessage" or vim.bo.filetype == "gitcommit" then
-            vim.opt_local.spell = true
-          end
-        end,
       })
     end,
     keys = {{ "<leader>gg", [[<cmd>silent wa<cr><cmd>Neogit kind=replace<cr>]] }},
