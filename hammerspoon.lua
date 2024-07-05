@@ -1,6 +1,60 @@
+-- Download Spoons, if required
+local f = io.open("Spoons/EmmyLua.spoon/annotations/hs.lua")
+if f ~= nil then io.close(f) else
+  hs.alert("Downloading Spoons")
+  os.execute([[
+    mkdir -p Spoons && cd Spoons &&
+    git clone https://github.com/jasonrudolph/ControlEscape.spoon.git
+    git clone https://github.com/gnudad/Rcmd.spoon.git
+    curl -LO https://github.com/Hammerspoon/Spoons/raw/master/Spoons/EmmyLua.spoon.zip &&
+    unzip ~/.config/hammerspoon/Spoons/EmmyLua.spoon.zip &&
+    rm ~/.config/hammerspoon/Spoons/EmmyLua.spoon.zip && cd -
+  ]])
+  -- Hammerspoon annotations for lua language server
+  hs.loadSpoon("EmmyLua")
+end
+
 -- Caps Lock acts as Esc when tapped, Ctrl when held
 ---@diagnostic disable-next-line: undefined-field
 hs.loadSpoon("ControlEscape"):start()
+
+-- Switch apps using the right command key
+---@diagnostic disable-next-line: undefined-field
+hs.loadSpoon("Rcmd"):bindHotkeys({
+  a = "Mail",
+  A = function() -- Copy Mail.app message link to clipboard
+    local script = [[
+      tell application "Mail"
+        set emails to selection
+        set email to item 1 of emails
+        set msgid to message id of email
+        set subj to subject of email
+        set the clipboard to "✉️ " & subj & "\nmessage://%3c" & msgid & "%3e"
+      end tell
+    ]]
+    hs.osascript.applescript(script)
+    hs.alert("Copied email link to clipboard")
+  end,
+  c = "Calendar",
+  d = "Things3",
+  e = "Microsoft Excel",
+  f = "Finder",
+  g = "Google Chrome",
+  h = "Hammerspoon",
+  k = function() hs.application.frontmostApplication():hide() end,
+  m = "Music",
+  n = "Notion",
+  o = "OTP Manager",
+  p = "Pritunl",
+  P = "Photos",
+  q = "Safari",
+  r = "Microsoft Remote Desktop",
+  s = "TablePlus",
+  t = "Microsoft Teams",
+  w = "kitty",
+  x = "FileZilla",
+  z = "Messages",
+}):start()
 
 -- Window Movement
 local movements = {
@@ -56,9 +110,6 @@ local function vimBind(bindKey, mods, key)
   end
   hs.hotkey.bind(bindMods, bindKey, stroke, nil, stroke)
 end
-hs.hotkey.bind({ "shift", "cmd" }, "h", function()
-  hs.application.frontmostApplication():hide()
-end)
 vimBind("h", "", "left")
 vimBind("j", "", "down")
 vimBind("k", "", "up")
@@ -73,10 +124,6 @@ hs.hotkey.bind({ "ctrl", "cmd" }, "m", function()
     .. tostring(hs.host.interfaceStyle() ~= "Dark")
   )
 end)
-
--- Hammerspoon annotations for lua language server
-local f = io.open("Spoons/EmmyLua.spoon/annotations/hs.lua")
-if f ~= nil then io.close(f) else hs.loadSpoon("EmmyLua") end
 
 -- Reload Hammerspoon
 hs.hotkey.bind({ "ctrl", "cmd" }, "r", hs.reload)
