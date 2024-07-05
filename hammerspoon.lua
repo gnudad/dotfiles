@@ -5,6 +5,7 @@ if f ~= nil then io.close(f) else
   os.execute([[
     mkdir -p Spoons && cd Spoons &&
     git clone https://github.com/jasonrudolph/ControlEscape.spoon.git
+    git clone https://github.com/gnudad/Rectangle.spoon.git
     git clone https://github.com/gnudad/Rcmd.spoon.git
     curl -LO https://github.com/Hammerspoon/Spoons/raw/master/Spoons/EmmyLua.spoon.zip &&
     unzip ~/.config/hammerspoon/Spoons/EmmyLua.spoon.zip &&
@@ -17,6 +18,17 @@ end
 -- Caps Lock acts as Esc when tapped, Ctrl when held
 ---@diagnostic disable-next-line: undefined-field
 hs.loadSpoon("ControlEscape"):start()
+
+-- Move and resize windows
+local mods = { "ctrl", "cmd" }
+---@diagnostic disable-next-line: undefined-field
+hs.loadSpoon("Rectangle"):bindHotkeys({
+  top_left    = { mods, "q" },  top_half    = { mods, "w" },  top_right    = { mods, "e" },
+  left_half   = { mods, "a" },  center_half = { mods, "s" },  right_half   = { mods, "d" },
+  bottom_left = { mods, "z" },  bottom_half = { mods, "x" },  bottom_right = { mods, "c" },
+  maximize    = { mods, "f" },  almost_max  = { mods, "g" },
+  center      = { mods, "0" },  smaller     = { mods, "-" },  larger       = { mods, "=" },
+})
 
 -- Switch apps using the right command key
 ---@diagnostic disable-next-line: undefined-field
@@ -55,55 +67,6 @@ hs.loadSpoon("Rcmd"):bindHotkeys({
   x = "FileZilla",
   z = "Messages",
 }):start()
-
--- Window Movement
-local movements = {
-  q =  {0.0, 0.0, 0.5, 0.5}, -- Top left
-  w =  {0.0, 0.0, 1.0, 0.5}, -- Top half
-  e =  {0.5, 0.0, 0.5, 0.5}, -- Top right
-  a =  {0.0, 0.0, 0.5, 1.0}, -- Left half
-  s =  {0.2, 0.0, 0.6, 1.0}, -- Center half
-  d =  {0.5, 0.0, 0.5, 1.0}, -- Right half
-  z =  {0.0, 0.5, 0.5, 0.5}, -- Bottom left
-  x =  {0.0, 0.5, 1.0, 0.5}, -- Bottom half
-  c =  {0.5, 0.5, 0.5, 0.5}, -- Bottom right
-  f =  {0.0, 0.0, 1.0, 1.0}, -- Full screen
-  g =  {0.1, 0.1, 0.8, 0.8}, -- Center screen
-}
-for key, rect in pairs(movements) do
-  hs.hotkey.bind({ "ctrl", "cmd" }, key, function()
-    hs.window.focusedWindow():moveToUnit(rect)
-  end)
-end
-
--- Window Resize
-local function resize(delta)
-  local frame = hs.window.focusedWindow():frame()
-  local screen = hs.screen.mainScreen():fullFrame()
-  if frame.w < screen.w then
-    if frame.x + frame.w == screen.w then
-      frame.x = frame.x - delta
-    elseif frame.x > 0 then
-      frame.x = frame.x - delta/2
-    end
-    frame.w = math.min(frame.w + delta, screen.w)
-  end
-  if frame.h < screen.h - 50 then
-    if frame.y + frame.h > screen.h - 50 then
-      frame.y = frame.y - delta
-    elseif frame.y > 50 then
-      frame.y = frame.y - delta/2
-    end
-    frame.h = math.min(frame.h + delta, screen.h)
-  end
-  -- Disable animation while resizing
-  local animationDuration = hs.window.animationDuration
-  hs.window.animationDuration = 0
-  hs.window.focusedWindow():setFrame(frame)
-  hs.window.animationDuration = animationDuration
-end
-hs.hotkey.bind({ "ctrl", "cmd" }, "=", function() resize(100) end)
-hs.hotkey.bind({ "ctrl", "cmd" }, "-", function() resize(-100) end)
 
 -- Vim Keybinds
 local function vimBind(bindKey, mods, key)
