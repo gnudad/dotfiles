@@ -203,6 +203,7 @@ require("lazy").setup({
       { "<leader>r", [[<cmd>Telescope resume<cr>]] },
       { "<leader>z", [[<cmd>Telescope zoxide list<cr>]] },
       { "<leader>y", [[<cmd>Telescope yank_history<cr>]] },
+      { "z=", [[<cmd>Telescope spell_suggest<cr>]] },
     },
   },
   { "folke/trouble.nvim",
