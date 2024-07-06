@@ -218,7 +218,7 @@ require("lazy").setup({
     end,
     cmd = "Trouble",
     keys = {
-      { "gd", [[<cmd>Trouble lsp_declarations<cr>]] },
+      { "gd", [[<cmd>Trouble lsp_definitions<cr>]] },
       { "gr", [[<cmd>Trouble lsp_references<cr>]] },
       { "<leader>d", [[<cmd>Trouble diagnostics toggle<cr>]] },
       { "<leader>q", [[<cmd>Trouble quickfix toggle<cr>]] },
@@ -236,15 +236,11 @@ require("lazy").setup({
       },
     },
     ft = {
-      "html",
-      "javascript",
-      "go",
-      "lua",
+      "html", "javascript", "go", "lua",
       "php", "class", "inc", "phtml",
       "python",
     },
     config = function()
-      vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
       vim.keymap.set("n", "ge", vim.diagnostic.open_float)
       vim.keymap.set("n", "<leader>li", [[<cmd>LspInfo<cr>]])
       vim.keymap.set("n", "<leader>lr", [[<cmd>LspRestart<cr>]])
