@@ -471,7 +471,7 @@ require("lazy").setup({
     keys = {
       { "gs", function() require("substitute").operator() end },
       { "gss", function() require("substitute").line() end },
-      { "gs", function() require("substitute").visual() end },
+      { "gs", function() require("substitute").visual() end, mode = { "x" } },
     },
   },
   { "ggandor/leap.nvim",
