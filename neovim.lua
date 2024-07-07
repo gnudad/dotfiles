@@ -562,7 +562,9 @@ require("lazy").setup({
   { "windwp/nvim-autopairs", event = "InsertEnter", config = true },
   { "windwp/nvim-ts-autotag", config = true },
   { "utilyre/sentiment.nvim", event = "VeryLazy", config = true },
-  { "kylechui/nvim-surround", config = true, keys = { "ys", "ds", "cs", "S" } },
+  { "kylechui/nvim-surround", config = true, keys = {
+      {"ys", "ds", "cs"}, { "S", mode = { "x" } },
+  }},
   { "Wansmer/treesj",
     opts = { use_default_keymaps = false },
     keys = {{ "<leader>j", [[<cmd>TSJSplit<cr>]] },
