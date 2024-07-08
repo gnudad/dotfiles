@@ -644,18 +644,6 @@ require("lazy").setup({
     cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
     event = { "User KittyScrollbackLaunch" },
   },
-  { "jpalardy/vim-slime",
-    config = function()
-      vim.g.slime_target = "kitty"
-      vim.g.slime_bracketed_paste = true
-      vim.g.slime_no_mappings = true
-    end,
-    keys = {
-      { "<leader>s", [[<Plug>SlimeMotionSend]] },
-      { "<leader>s", mode = "x", [[<Plug>SlimeRegionSend]] },
-      { "<leader>ss", [[<Plug>SlimeLineSend]] },
-    },
-  },
 })
 vim.keymap.set("n", "<leader>L", [[<cmd>Lazy<cr>]])
 
@@ -682,6 +670,14 @@ vim.keymap.set("c", "<down>", "<C-n>")
 -- Delete buffer without saving/prompt
 vim.keymap.set("n", "<leader>k", [[<cmd>bw!<cr>]])
 vim.keymap.set("n", "<leader>K", [[<cmd>b#|bw! #<cr>]])
+
+-- Send to terminal
+vim.keymap.set({ "n", "x" }, "<leader><cr>", function()
+  if vim.fn.mode() == "n" then vim.cmd([[normal V]]) end
+  vim.cmd([[normal "vy]])
+  local data = "\x1b[200~" .. vim.fn.getreg("v") .. "\x1b[201~\n"
+  os.execute([[kitty @ send-text --match recent:1 "]] .. data .. [["]])
+end)
 
 -- Exit quickly without saving/prompts
 vim.keymap.set({ "n", "x" }, "ZZ", [[<cmd>xa!<cr>]])
