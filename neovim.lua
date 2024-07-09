@@ -675,7 +675,8 @@ vim.keymap.set("n", "<leader>K", [[<cmd>b#|bw! #<cr>]])
 vim.keymap.set({ "n", "x" }, "<leader><cr>", function()
   if vim.fn.mode() == "n" then vim.cmd([[normal V]]) end
   vim.cmd([[normal "vy]])
-  local data = "\x1b[200~" .. vim.fn.getreg("v") .. "\x1b[201~\n"
+  local data = vim.fn.getreg("v"):gsub('%"', '\\"'):gsub("%$", "\\$")
+  data = "\x1b[200~" .. data .. "\x1b[201~\n"
   os.execute([[kitty @ send-text --match recent:1 "]] .. data .. [["]])
 end)
 
