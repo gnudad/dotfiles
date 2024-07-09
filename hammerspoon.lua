@@ -69,20 +69,20 @@ hs.loadSpoon("Rcmd"):bindHotkeys({
 }):start()
 
 -- Vim Keybinds
-local function vimBind(bindKey, mods, key)
-  local stroke = function() hs.eventtap.keyStroke(mods, key, 0) end
-  local bindMods = { "cmd" }
-  if string.lower(bindKey) ~= bindKey then
-    table.insert(bindMods, "shift")
-  end
-  hs.hotkey.bind(bindMods, bindKey, stroke, nil, stroke)
+local function vimBind(bindMods, bindKey, pressedMods, pressedKey)
+  local pressedfn = function() hs.eventtap.keyStroke(pressedMods, pressedKey, 0) end
+  hs.hotkey.bind(bindMods, bindKey, pressedfn, nil, pressedfn)
+  pressedfn = function() hs.eventtap.keyStroke("shift," .. pressedMods, pressedKey, 0) end
+  hs.hotkey.bind("shift," .. bindMods, bindKey, pressedfn, nil, pressedfn)
 end
-vimBind("h", "", "left")
-vimBind("j", "", "down")
-vimBind("k", "", "up")
-vimBind("l", "", "right")
-vimBind("g", "cmd", "up")
-vimBind("G", "cmd", "down")
+vimBind("cmd", "h", "", "left")
+vimBind("cmd", "j", "", "down")
+vimBind("cmd", "k", "", "up")
+vimBind("cmd", "l", "", "right")
+vimBind("alt", "h", "cmd", "left")
+vimBind("alt", "j", "cmd", "down")
+vimBind("alt", "k", "cmd", "up")
+vimBind("alt", "l", "cmd", "right")
 
 -- Toggle macOS dark mode
 hs.hotkey.bind({ "ctrl", "cmd" }, "m", function()
