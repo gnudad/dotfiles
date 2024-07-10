@@ -51,7 +51,18 @@ if [[ $(uname) == "Darwin" ]]; then
     fi
     eval "$(/opt/homebrew/bin/brew shellenv)"
 elif [[ $(uname) == "Linux" ]]; then
-    # TODO
+    zi ice from"gh-r" as"program"; zi light junegunn/fzf
+    zi ice from"gh-r" as"program" pick"nvim*/bin/nvim"; zi light neovim/neovim
+    zi ice from"gh-r" as"program" pick"rg/rg"; zi light BurntSushi/ripgrep
+    zi ice from"gh-r" as"program"; zi light ajeetdsouza/zoxide
+    if [[ ! -d ~/.dotfiles ]]; then
+        git clone https://github.com/gnudad/dotfiles.git ~/.dotfiles
+        ln -sf ~/.dotfiles/zshrc ~/.zshrc
+    fi
+    if [[ ! -d ~/.config/nvim ]]; then
+        mkdir -p ~/.config/nvim
+        ln -sf ~/.dotfiles/neovim.lua ~/.config/nvim/init.lua
+    fi
 fi
 
 autoload -Uz compinit && compinit
