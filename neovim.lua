@@ -557,7 +557,10 @@ require("lazy").setup({
       vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
     end,
   },
-  { "chrisgrieser/nvim-various-textobjs", opts = { useDefaultKeymaps = true } },
+  { "chrisgrieser/nvim-various-textobjs", opts = {
+    useDefaultKeymaps = true,
+    disabledKeymaps = { "gw" },
+  }},
   { "wellle/targets.vim" },
   { "windwp/nvim-autopairs", event = "InsertEnter", config = true },
   { "windwp/nvim-ts-autotag", config = true },
