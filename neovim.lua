@@ -616,6 +616,19 @@ require("lazy").setup({
       vim.api.nvim_set_hl(0, "UfoFoldedEllipsis", { link = "FloatTitle" })
     end,
   },
+  { "mistweaverco/kulala.nvim", ft = "http",
+    init = function()
+      vim.filetype.add({ extension = { http = "http" } })
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "http",
+        callback = function()
+          vim.keymap.set("n", "<leader><cr>", require("kulala").run, { buffer = 0})
+          vim.keymap.set("n", "<leader>v", require("kulala").toggle_view, { buffer = 0})
+        end
+      })
+    end,
+    opts = { additional_curl_options = { "-L" } },
+  },
   { "iamcco/markdown-preview.nvim", ft = "markdown",
     build = function() vim.fn["mkdp#util#install"]() end,
     config = function()
