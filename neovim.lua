@@ -100,9 +100,7 @@ require("lazy").setup({
             require("oil").get_current_dir() .. require("oil").get_cursor_entry().name
           ) end,
         },
-        win_options = {
-          winbar = "%{v:lua.require('oil').get_current_dir()}",
-        },
+        win_options = { winbar = "%{v:lua.require('oil').get_current_dir()}" },
       })
       vim.api.nvim_set_hl(0, "WinBar", { link = "Title" })
     end,
@@ -117,8 +115,7 @@ require("lazy").setup({
       end
     end,
   },
-  { "lewis6991/gitsigns.nvim",
-    event = "BufReadPost",
+  { "lewis6991/gitsigns.nvim", event = "BufReadPost",
     config = function()
       local gs = require("gitsigns")
       gs.setup({})
@@ -147,9 +144,8 @@ require("lazy").setup({
       require("neogit").setup({
         disable_insert_on_commit = true,
         console_timeout = 5000,
-        sections = {
-          untracked = { folded = true, hidden = false },
-        },
+        ---@diagnostic disable-next-line: missing-fields
+        sections = { untracked = { folded = true } },
       })
     end,
     keys = {{ "<leader>gg", [[<cmd>silent wa<cr><cmd>Neogit kind=replace<cr>]] }},
@@ -378,28 +374,18 @@ require("lazy").setup({
       local luasnip = require("luasnip")
       cmp.setup({
         snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
+          expand = function(args) luasnip.lsp_expand(args.body) end,
         },
         mapping = cmp.mapping.preset.insert({
           ["<tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.confirm({ select = true })
-            elseif luasnip.expand_or_jumpable() then
-              luasnip.expand_or_jump()
-            else
-              fallback()
-            end
+            if cmp.visible() then cmp.confirm({ select = true })
+            elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
+            else fallback() end
           end, { "i", "s" }),
           ["<S-tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.abort()
-            elseif luasnip.jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
+            if cmp.visible() then cmp.abort()
+            elseif luasnip.jumpable(-1) then luasnip.jump(-1)
+            else fallback() end
           end, { "i", "s" }),
           ["<C-u>"] = cmp.mapping.scroll_docs(-4),
           ["<C-d>"] = cmp.mapping.scroll_docs(4),
@@ -414,9 +400,7 @@ require("lazy").setup({
           { name = "luasnip" },
         }),
         ---@diagnostic disable-next-line: missing-fields
-        matching = {
-          disallow_fuzzy_matching = true,
-        },
+        matching = { disallow_fuzzy_matching = true, },
       })
       -- Insert `(` after select function or method item
       cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
@@ -593,35 +577,19 @@ require("lazy").setup({
   },
   { "tzachar/highlight-undo.nvim", config = true },
   { "utilyre/sentiment.nvim", config = true },
-  { "junegunn/vim-easy-align",
-    keys = {{ "gA", mode = { "n", "x" }, [[<Plug>(EasyAlign)]] }},
-  },
+  { "junegunn/vim-easy-align", keys = {{ "gA", mode = { "x" }, [[<Plug>(EasyAlign)]] }} },
   { "brenoprata10/nvim-highlight-colors", config = true },
   { "kevinhwang91/nvim-ufo",
     dependencies = "kevinhwang91/promise-async",
     config = function()
       ---@diagnostic disable-next-line: missing-fields
       require("ufo").setup({
-        provider_selector = function()
-          return { "treesitter", "indent" }
-        end,
-        preview = {
-          win_config = {
-            border = "none",
-            winblend = 0,
-            winhighlight = "Normal:FloatBorder",
-          },
-        },
+        provider_selector = function() return { "treesitter", "indent" } end,
       })
       vim.keymap.set("n", "zR", require("ufo").openAllFolds)
       vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
       vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
       vim.keymap.set("n", "zm", require("ufo").closeFoldsWith)
-      vim.keymap.set("n", "K", function()
-        if not require("ufo").peekFoldedLinesUnderCursor() then
-          vim.lsp.buf.hover()
-        end
-      end)
       vim.api.nvim_set_hl(0, "Folded", {})
       vim.api.nvim_set_hl(0, "UfoFoldedEllipsis", { link = "FloatTitle" })
     end,
