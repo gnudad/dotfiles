@@ -495,6 +495,23 @@ require("lazy").setup({
           },
         },
       })
+      -- Fix sql @function.call highlights
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "sql",
+        callback = function()
+          local path = vim.fn.stdpath("config") .. "/queries/sql"
+          local f = io.open(path .. "/highlights.scm")
+          if f ~= nil then f:close() else
+            os.execute("mkdir -p " .. path)
+            f = io.open(path .. "/highlights.scm", "w")
+            if f ~= nil then
+              f:write(";; extends\n")
+              f:write("(invocation (object_reference name: (identifier) @function.call))")
+              f:close()
+            end
+          end
+        end,
+      })
       vim.keymap.set("n", "<leader>i", [[<cmd>Inspect<cr>]])
     end,
   },
