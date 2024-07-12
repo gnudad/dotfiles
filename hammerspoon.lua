@@ -7,6 +7,7 @@ if f ~= nil then io.close(f) else
     git clone https://github.com/jasonrudolph/ControlEscape.spoon.git
     git clone https://github.com/gnudad/Rectangle.spoon.git
     git clone https://github.com/gnudad/Rcmd.spoon.git
+    git clone https://github.com/gnudad/KeyMapper.spoon.git
     curl -LO https://github.com/Hammerspoon/Spoons/raw/master/Spoons/EmmyLua.spoon.zip &&
     unzip ~/.config/hammerspoon/Spoons/EmmyLua.spoon.zip &&
     rm ~/.config/hammerspoon/Spoons/EmmyLua.spoon.zip && cd -
@@ -69,20 +70,32 @@ hs.loadSpoon("Rcmd"):bindHotkeys({
 }):start()
 
 -- Vim Keybinds
-local function vimBind(bindMods, bindKey, pressedMods, pressedKey)
-  local pressedfn = function() hs.eventtap.keyStroke(pressedMods, pressedKey, 0) end
-  hs.hotkey.bind(bindMods, bindKey, pressedfn, nil, pressedfn)
-  pressedfn = function() hs.eventtap.keyStroke("shift," .. pressedMods, pressedKey, 0) end
-  hs.hotkey.bind("shift," .. bindMods, bindKey, pressedfn, nil, pressedfn)
+local keymaps = {
+  default = {
+    [{ "cmd", "h" }] = { "",    "left",  true },
+    [{ "cmd", "j" }] = { "",    "down" , true },
+    [{ "cmd", "k" }] = { "",    "up",    true },
+    [{ "cmd", "l" }] = { "",    "right", true },
+    [{ "alt", "h" }] = { "cmd", "left" },
+    [{ "alt", "j" }] = { "cmd", "down" },
+    [{ "alt", "k" }] = { "cmd", "up" },
+    [{ "alt", "l" }] = { "cmd", "right" },
+  },
+  Finder = {
+    [{ "cmd", "h" }] = { "cmd", "up" },
+    [{ "cmd", "l" }] = { "cmd", "down" },
+  },
+  Mail = {
+    [{ "alt", "j" }] = { "alt,cmd", "down" },
+    [{ "alt", "k" }] = { "alt,cmd", "up" },
+  },
+}
+-- Add shift version of default keymaps for selection
+for lhs, rhs in pairs(keymaps.default) do
+  keymaps.default[{ "shift," .. lhs[1], lhs[2] }] = { "shift," .. rhs[1], rhs[2], rhs[3] }
 end
-vimBind("cmd", "h", "", "left")
-vimBind("cmd", "j", "", "down")
-vimBind("cmd", "k", "", "up")
-vimBind("cmd", "l", "", "right")
-vimBind("alt", "h", "cmd", "left")
-vimBind("alt", "j", "cmd", "down")
-vimBind("alt", "k", "cmd", "up")
-vimBind("alt", "l", "cmd", "right")
+---@diagnostic disable-next-line: undefined-field
+hs.loadSpoon("KeyMapper"):bindHotkeys(keymaps):start()
 
 -- Toggle macOS dark mode
 hs.hotkey.bind({ "ctrl", "cmd" }, "m", function()
