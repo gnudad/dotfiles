@@ -435,9 +435,7 @@ require("lazy").setup({
   },
   { "gbprod/yanky.nvim",
     dependencies = "kkharji/sqlite.lua",
-    config = function()
-      require("yanky").setup({ ring = { storage = "sqlite" } })
-    end,
+    opts = { ring = { storage = "sqlite" } },
     keys = {
       { "y", mode = {"n", "x"}, [[<Plug>(YankyYank)]] },
       { "p", mode = {"n", "x"}, [[<Plug>(YankyPutAfter)]] },
@@ -593,12 +591,7 @@ require("lazy").setup({
   { "chrishrb/gx.nvim", submodules = false, config = true,
     keys = {{ "gx", mode = { "n", "x" }, [[<cmd>Browse<cr>1<cr><cr>]] }},
   },
-  { "tzachar/highlight-undo.nvim",
-    config = function()
-      require("highlight-undo").setup({})
-      vim.api.nvim_set_hl(0, "HighlightUndo", { link = "Substitute"})
-    end,
-  },
+  { "tzachar/highlight-undo.nvim", config = true },
   { "utilyre/sentiment.nvim", config = true },
   { "junegunn/vim-easy-align",
     keys = {{ "gA", mode = { "n", "x" }, [[<Plug>(EasyAlign)]] }},
