@@ -454,11 +454,9 @@ require("lazy").setup({
   },
   { "ggandor/leap.nvim",
     config = function()
-      vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = "NonText" })
-      vim.keymap.set({ "n", "x", "o" }, "s", [[<Plug>(leap-forward-to)]])
-      vim.keymap.set({ "n",          }, "S", [[<Plug>(leap-backward-to)]])
-      vim.keymap.set({      "x", "o" }, "gS", [[<Plug>(leap-backward-to)]])
-      vim.keymap.set({ "n",          }, "gS", [[<Plug>(leap-from-window)]])
+      vim.keymap.set({ "n", "x", "o" }, "s", [[<Plug>(leap)]])
+      vim.keymap.set({ "n",          }, "S", [[<Plug>(leap-from-window)]])
+      require("leap.user").set_repeat_keys("<tab>", "<backspace>")
     end,
   },
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate",
