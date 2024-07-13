@@ -440,18 +440,6 @@ require("lazy").setup({
     end,
     keys = {{ "<A-y>", mode = { "n", "v" } }},
   },
-  { "gbprod/substitute.nvim",
-    config = function()
-      require("substitute").setup({
-        on_substitute = require("yanky.integration").substitute(),
-      })
-    end,
-    keys = {
-      { "gs", function() require("substitute").operator() end },
-      { "gss", function() require("substitute").line() end },
-      { "gs", function() require("substitute").visual() end, mode = { "x" } },
-    },
-  },
   { "ggandor/leap.nvim",
     config = function()
       vim.keymap.set({ "n", "x", "o" }, "s", [[<Plug>(leap)]])
