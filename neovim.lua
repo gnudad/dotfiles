@@ -460,9 +460,8 @@ require("lazy").setup({
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = "<cr>",
-            node_incremental = "<cr>",
-            node_decremental = "<bs>",
+            node_incremental = "v",
+            node_decremental = "<backspace>",
           },
         },
       })
