@@ -438,7 +438,7 @@ require("lazy").setup({
     config = function()
       require("osc52").setup({ silent = true })
       vim.keymap.set("n", "<A-y>", require("osc52").copy_operator, { expr = true })
-      vim.keymap.set("n", "<A-y><A-y>", "<A-y>_", { remap = true })
+      vim.keymap.set("n", "<A-y><A-y>", "<A-y>i_", { remap = true })
       vim.keymap.set("v", "<A-y>", require("osc52").copy_visual)
     end,
     keys = {{ "<A-y>", mode = { "n", "v" } }},
