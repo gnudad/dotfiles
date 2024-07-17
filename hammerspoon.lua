@@ -29,6 +29,8 @@ hs.loadSpoon("Rectangle"):bindHotkeys({
   bottom_left = { mods, "z" },  bottom_half = { mods, "x" },  bottom_right = { mods, "c" },
   maximize    = { mods, "f" },  almost_max  = { mods, "g" },
   center      = { mods, "0" },  smaller     = { mods, "-" },  larger       = { mods, "=" },
+  focus_left  = { mods, "h" },  focus_right = { mods, "l" },
+  focus_up    = { mods, "k" },  focus_down  = { mods, "j" },
 })
 
 -- Switch apps using the right command key
