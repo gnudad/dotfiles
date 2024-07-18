@@ -93,9 +93,11 @@ local keymaps = {
   },
 }
 -- Add shift version of default keymaps for selection
+local shiftmaps = {}
 for lhs, rhs in pairs(keymaps.default) do
-  keymaps.default[{ "shift," .. lhs[1], lhs[2] }] = { "shift," .. rhs[1], rhs[2], rhs[3] }
+  shiftmaps[{ "shift," .. lhs[1], lhs[2] }] = { "shift," .. rhs[1], rhs[2], rhs[3] }
 end
+for lhs, rhs in pairs(shiftmaps) do keymaps.default[lhs] = rhs end
 ---@diagnostic disable-next-line: undefined-field
 hs.loadSpoon("KeyMapper"):bindHotkeys(keymaps):start()
 
