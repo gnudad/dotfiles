@@ -49,7 +49,10 @@ require("lazy").setup({
       vim.api.nvim_create_autocmd("ColorScheme", {
         callback = function()
           vim.api.nvim_set_hl(0, "@function.builtin", { link = "YellowBold" })
+          vim.api.nvim_set_hl(0, "@variable.builtin", { italic = true })
           vim.api.nvim_set_hl(0, "@variable.member", { link = "Fg" })
+          vim.api.nvim_set_hl(0, "@variable.parameter", { italic = true })
+          vim.api.nvim_set_hl(0, "DiagnosticUnnecessary", { link = "DiagnosticUnderlineHint" })
           vim.api.nvim_set_hl(0, "MatchParen", { link = "FloatTitle" })
         end,
       })
