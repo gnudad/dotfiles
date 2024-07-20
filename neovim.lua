@@ -645,6 +645,11 @@ vim.keymap.set("x", "/", "<Esc>/\\%V")
 -- Select last changed or pasted region
 vim.keymap.set("n", "gp", [[ "`[" . getregtype() . "`]" ]], { expr = true })
 
+-- Lazy motions
+vim.keymap.set({ "o", "x" }, "ag", "gG", { remap = true })
+vim.keymap.set({ "o", "x" }, "q", "iq", { remap = true })
+vim.keymap.set({ "o", "x" }, "w", "iw", { remap = true })
+
 -- Fix j/k movements in wrapped lines
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
