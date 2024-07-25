@@ -233,9 +233,6 @@ require("lazy").setup({
         keys = {{ "<leader>M", [[<cmd>Mason<cr>]] }},
       },
       { "williamboman/mason-lspconfig.nvim", config = true },
-      { "aznhe21/actions-preview.nvim", config = true,
-        keys = {{ "ga", function() require("actions-preview").code_actions() end }},
-      },
     },
     ft = {
       "html", "javascript", "go", "lua",
@@ -338,6 +335,10 @@ require("lazy").setup({
         { path = "~/.config/hammerspoon/Spoons/EmmyLua.spoon/annotations" },
       },
     },
+  },
+  { "rachartier/tiny-code-action.nvim", config = true,
+    dependencies = "nvim-telescope/telescope.nvim",
+    keys = {{ "ga", function() require("tiny-code-action").code_action() end }},
   },
   { "smjonas/inc-rename.nvim",
     config = function()
