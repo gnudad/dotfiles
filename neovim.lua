@@ -20,7 +20,6 @@ vim.o.splitright = true
 vim.o.swapfile = false
 vim.o.tabstop = 2
 vim.o.textwidth = 88
-vim.o.timeoutlen = 500
 vim.o.title = true
 vim.o.titlestring = "%{fnamemodify(getcwd(), ':t')}"
 vim.o.wrap = false
