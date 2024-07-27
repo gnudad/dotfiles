@@ -200,6 +200,7 @@ require("lazy").setup({
       { "<leader>p", [[<cmd>Telescope projects<cr>]] },
       { "<leader>f", [[<cmd>Telescope find_files<cr>]] },
       { "<leader><tab>", [[<cmd>Telescope buffers sort_lastused=true<cr>]] },
+      { "<leader>*", [[<cmd>Telescope grep_string<cr>]] },
       { "<leader>/", [[<cmd>Telescope live_grep<cr>]] },
       { "<leader>r", [[<cmd>Telescope resume<cr>]] },
       { "<leader>z", [[<cmd>Telescope zoxide list<cr>]] },
