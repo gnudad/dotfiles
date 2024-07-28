@@ -79,7 +79,14 @@ require("lazy").setup({
       },
     },
   },
-  { "j-hui/fidget.nvim", opts = { notification = { override_vim_notify = true } } },
+  { "j-hui/fidget.nvim", 
+    config = function()
+      require("fidget").setup({
+        notification = { override_vim_notify = true },
+      })
+      vim.keymap.set("n", "<leader>F", [[<cmd>Fidget history<cr>]])
+    end,
+  },
   { "stevearc/oil.nvim", lazy = false,
     dependencies = {
       "nvim-tree/nvim-web-devicons",
