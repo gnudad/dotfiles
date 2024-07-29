@@ -229,29 +229,47 @@ require("lazy").setup({
     keys = {
       { "gd", [[<cmd>Trouble lsp_definitions<cr>]] },
       { "gr", [[<cmd>Trouble lsp_references<cr>]] },
-      { "<leader>d", [[<cmd>Trouble diagnostics toggle<cr>]] },
+      { "<leader>dd", [[<cmd>Trouble diagnostics toggle<cr>]] },
       { "<leader>q", [[<cmd>Trouble quickfix toggle<cr>]] },
       { "<leader>o", [[<cmd>Trouble symbols toggle focus=true<cr>]] },
     },
   },
+  { "williamboman/mason.nvim", config = true,
+    keys = {{ "<leader>M", [[<cmd>Mason<cr>]] }},
+  },
   { "neovim/nvim-lspconfig",
-    dependencies = {
-      { "williamboman/mason.nvim", config = true,
-        keys = {{ "<leader>M", [[<cmd>Mason<cr>]] }},
-      },
-      { "williamboman/mason-lspconfig.nvim", config = true },
-    },
-    ft = {
-      "html", "javascript", "go", "lua",
-      "php", "class", "inc", "phtml",
-      "python",
-    },
+    dependencies = "williamboman/mason-lspconfig.nvim",
+    ft = { "go", "html", "javascript", "lua", "php", "python" },
     config = function()
+      require("mason-lspconfig").setup({
+        handlers = {
+          function(server_name)
+            require("lspconfig")[server_name].setup({
+              ---@diagnostic disable-next-line: unused-local
+              on_attach = function(client, bufnr)
+                client.server_capabilities.semanticTokensProvider = nil
+              end,
+            })
+          end,
+          ["pyright"] = function()
+            require("lspconfig").pyright.setup({
+              settings = { python = { pythonPath = ".venv/bin/python" } },
+            })
+          end,
+          ["ruff_lsp"] = function()
+            require("lspconfig").ruff_lsp.setup({
+              ---@diagnostic disable-next-line: unused-local
+              on_attach = function(client, bufnr)
+                -- Prevent "No information available" from ruff-lsp on vim.lsp.buf.hover()
+                client.server_capabilities.hoverProvider = false
+              end,
+            })
+          end,
+        },
+      })
       vim.keymap.set("n", "ge", vim.diagnostic.open_float)
       vim.keymap.set("n", "<leader>li", [[<cmd>LspInfo<cr>]])
       vim.keymap.set("n", "<leader>lr", [[<cmd>LspRestart<cr>]])
-
-      -- Toggle diagnostics
       local function update_severity(s)
         if s ~= false then s = { severity = { min = vim.diagnostic.severity[s] } } end
         vim.diagnostic.config({
@@ -264,74 +282,9 @@ require("lazy").setup({
         vim.keymap.set('n', ']d', function() vim.diagnostic.goto_next(s) end)
       end
       vim.keymap.set("n", "<leader>de", function() update_severity("ERROR") end)
-      vim.keymap.set("n", "<leader>dw", function() update_severity("WARN") end)
       vim.keymap.set("n", "<leader>da", function() update_severity("HINT") end)
       vim.keymap.set("n", "<leader>do", function() update_severity(false) end)
       update_severity("HINT")
-
-      local servers = {}
-      for _, s in ipairs(require("mason-registry").get_installed_package_names()) do
-        servers[s] = true
-      end
-
-      -- Go
-      if servers["gopls"] then
-        require("lspconfig").gopls.setup({})
-      end
-
-      -- HTML
-      if servers["emmet-language-server"] then
-        require("lspconfig").emmet_language_server.setup({})
-      end
-
-      -- Javascript
-      if servers["typescript-language-server"] then
-        require("lspconfig").tsserver.setup({
-          ---@diagnostic disable-next-line: unused-local
-          on_attach = function(client, bufnr)
-            client.server_capabilities.semanticTokensProvider = nil
-          end,
-        })
-      end
-
-      -- Lua
-      if servers["lua-language-server"] then
-        require("lspconfig").lua_ls.setup({
-          ---@diagnostic disable-next-line: unused-local
-          on_attach = function(client, bufnr)
-            client.server_capabilities.semanticTokensProvider = nil
-          end,
-        })
-      end
-
-      -- PHP
-      vim.filetype.add({ extension = { class = "php" } })
-      if servers['intelephense'] then
-        require("lspconfig").intelephense.setup({
-          settings = {
-            intelephense = {
-              files = { associations = { "*.php", "*.class", "*.inc", "*.phtml" } },
-            },
-          },
-        })
-      end
-
-      -- Python
-      if servers['pyright'] then
-        require("lspconfig").pyright.setup({
-          settings = { python = { pythonPath = ".venv/bin/python" } },
-        })
-      end
-      if servers['ruff-lsp'] then
-        require("lspconfig").ruff_lsp.setup({
-          ---@diagnostic disable-next-line: unused-local
-          on_attach = function(client, bufnr)
-            -- Prevent "No information available" from ruff-lsp on vim.lsp.buf.hover()
-            client.server_capabilities.hoverProvider = false
-          end,
-        })
-      end
-
     end,
   },
   { "folke/lazydev.nvim", ft = "lua",
@@ -356,18 +309,15 @@ require("lazy").setup({
     end,
   },
   { "stevearc/conform.nvim",
-    config = function()
-      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-      require("conform").setup({
+    opts = {
         formatters_by_ft = {
           go = { "gofmt" },
           json = { "jq" },
           python = { "ruff_format" },
         },
-      })
-    end,
+    },
     keys = {{ "<leader>=", mode = { "n", "x" }, function()
-      require("conform").format()
+      require("conform").format({ lsp_format = "fallback" })
     end }},
   },
   { "hrsh7th/nvim-cmp",
@@ -645,7 +595,7 @@ vim.keymap.set("n", "<leader>L", [[<cmd>Lazy<cr>]])
 vim.keymap.set("i", "jk", "<esc>")
 
 -- Clear search highlights
-vim.keymap.set("n", "<esc>", [[<cmd>nohlsearch<cr><esc>]])
+vim.keymap.set("n", "<esc>", [[<cmd>nohlsearch<cr>]])
 
 -- Search in visual selection
 vim.keymap.set("x", "/", "<Esc>/\\%V")
