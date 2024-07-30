@@ -183,7 +183,10 @@ require("lazy").setup({
         defaults = {
           layout_strategy = "vertical",
           mappings = {
-            i = { ["<C-t>"] = require("trouble.sources.telescope").open },
+            i = {
+              ["<C-t>"] = require("trouble.sources.telescope").open,
+              ["<esc>"] = require("telescope.actions").close,
+            },
           },
         },
         extensions = {
