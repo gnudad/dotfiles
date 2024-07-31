@@ -154,6 +154,7 @@ require("lazy").setup({
     end,
     config = function()
       require("neogit").setup({
+        disable_hint = true,
         disable_insert_on_commit = true,
         console_timeout = 5000,
         ---@diagnostic disable-next-line: missing-fields
