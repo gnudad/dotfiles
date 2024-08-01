@@ -632,9 +632,9 @@ vim.keymap.set({ "n", "x" }, "<leader><cr>", function()
   os.execute("printf '%s' " .. data .. " | kitty @ send-text --match recent:1 --stdin")
 end)
 
--- Exit quickly without saving/prompts
-vim.keymap.set({ "n", "x" }, "ZZ", [[<cmd>xa!<cr>]])
-vim.keymap.set({ "n", "x" }, "ZQ", [[<cmd>qa!<cr>]])
+-- Exit quickly without prompts
+vim.keymap.set({ "n", "x" }, "Q", [[<cmd>qa!<cr>]]) -- Without saving
+vim.keymap.set({ "n", "x" }, "Z", [[<cmd>xa!<cr>]]) -- Save if modified
 
 -- Edit Neovim config
 vim.keymap.set("n", "<leader>.", [[<cmd>edit $MYVIMRC<cr>]])
