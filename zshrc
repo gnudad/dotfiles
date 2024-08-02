@@ -11,11 +11,13 @@ alias ls="ls --color"
 alias ll="ls -al"
 alias lt="ll -t | less -FR"
 
+# Bootstrap Zinit plugin manager
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
 
+# Plugins
 zinit light sindresorhus/pure
 zinit light jeffreytse/zsh-vi-mode
 zinit light trystan2k/zsh-tab-title
@@ -25,6 +27,10 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit ice lucid wait
 zinit snippet OMZP::fzf
 zinit light Aloxaf/fzf-tab
+
+# Plugin config
+ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
 if [[ $(uname) == "Darwin" ]]; then
     if [[ ! -d /opt/homebrew ]]; then
@@ -51,6 +57,7 @@ if [[ $(uname) == "Darwin" ]]; then
         ln -sf ~/dotfiles/neovim.lua ~/.config/nvim/init.lua
     fi
     eval "$(/opt/homebrew/bin/brew shellenv)"
+
 elif [[ $(uname) == "Linux" ]]; then
     zi ice from"gh-r" as"program"; zi light junegunn/fzf
     zi ice from"gh-r" as"program" pick"nvim*/bin/nvim"; zi light neovim/neovim
