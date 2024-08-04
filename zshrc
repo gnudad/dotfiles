@@ -35,26 +35,27 @@ ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 if [[ $(uname) == "Darwin" ]]; then
     if [[ ! -d /opt/homebrew ]]; then
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        brew bundle --file=~/dotfiles/Brewfile
+        brew bundle --file=~/.dotfiles/Brewfile
     fi
-    if [[ ! -d ~/dotfiles ]]; then
-        git clone git@github.com:gnudad/dotfiles.git ~/dotfiles
-        ln -sf ~/dotfiles/zshrc ~/.zshrc
+    if [[ ! -d ~/.dotfiles ]]; then
+        git clone git@github.com:gnudad/dotfiles.git ~/.dotfiles
+        ln -sf ~/.dotfiles/zshrc ~/.zshrc
         touch ~/.hushlogin
     fi
     if [[ ! -d ~/.config/hammerspoon ]]; then
         defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
-        ln -sf ~/dotfiles/hammerspoon.lua ~/.config/hammerspoon/init.lua
+        mkdir -p ~/.config/hammerspoon
+        ln -sf ~/.dotfiles/hammerspoon.lua ~/.config/hammerspoon/init.lua
     fi
     if [[ ! -d ~/.config/kitty ]]; then
         mkdir -p ~/.config/kitty
-        ln -sf ~/dotfiles/kitty.conf ~/.config/kitty/kitty.conf
+        ln -sf ~/.dotfiles/kitty.conf ~/.config/kitty/kitty.conf
         echo "protocol file" > ~/.config/kitty/launch-actions.conf
         echo "action launch --type=os-window -- \$EDITOR -- \$FILE_PATH" >> ~/.config/kitty/launch-actions.conf
     fi
     if [[ ! -d ~/.config/nvim ]]; then
         mkdir -p ~/.config/nvim
-        ln -sf ~/dotfiles/neovim.lua ~/.config/nvim/init.lua
+        ln -sf ~/.dotfiles/neovim.lua ~/.config/nvim/init.lua
     fi
     eval "$(/opt/homebrew/bin/brew shellenv)"
 
