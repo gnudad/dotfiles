@@ -581,12 +581,17 @@ require("lazy").setup({
             disable = false,
             secret = { "cat", vim.fn.expand("~/.dotfiles/anthropic.key") },
           },
+          openai = {
+            disable = false,
+            secret = { "cat", vim.fn.expand("~/.dotfiles/openai.key") },
+          },
           ollama = { disable = false },
-          openai = { disable = true },
         },
         agents = {
           { name = "ChatClaude-3-Haiku", disable = true },
           { name = "CodeClaude-3-Haiku", disable = true },
+          { name = "ChatGPT4o-mini", disable = true },
+          { name = "CodeGPT4o-mini", disable = true },
         },
       })
     end,
