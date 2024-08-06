@@ -573,6 +573,37 @@ require("lazy").setup({
     end,
     keys = {{ "<leader>m", [[<cmd>MarkdownPreviewToggle<cr>]] }},
   },
+  { "Robitx/gp.nvim",
+    config = function()
+      require("gp").setup({
+        providers = {
+          anthropic = {
+            disable = false,
+            secret = { "cat", vim.fn.expand("~/.dotfiles/anthropic.key") },
+          },
+          ollama = { disable = false },
+          openai = { disable = true },
+        },
+        agents = {
+          { name = "ChatClaude-3-Haiku", disable = true },
+          { name = "CodeClaude-3-Haiku", disable = true },
+        },
+      })
+    end,
+    keys = {
+      { "<C-g>c", mode = { "n" }, [[:GpChatNew<cr>]] },
+      { "<C-g>c", mode = { "x" }, [[:<C-u>'<,'>GpChatNew<cr>]] },
+      { "<C-g>v", mode = { "n" }, [[:GpChatToggle<cr>]] },
+      { "<C-g>v", mode = { "x" }, [[:<C-u>'<,'>GpChatToggle<cr>]] },
+      { "<C-g>p", mode = { "x" }, [[:<C-u>'<,'>GpChatPaste<cr>]] },
+      { "<C-g>r", mode = { "x" }, [[:<C-u>'<,'>GpRewrite<cr>]] },
+      { "<C-g>i", mode = { "x" }, [[:<C-u>'<,'>GpImplement<cr>]] },
+      { "<C-g>a", mode = { "x" }, [[:<C-u>'<,'>GpAppend<cr>]] },
+      { "<C-g>b", mode = { "x" }, [[:<C-u>'<,'>GpPrepend<cr>]] },
+      { "<C-g>n", mode = { "n", "x" }, [[:GpNextAgent<cr>]] },
+      { "<C-g>s", mode = { "n", "x" }, [[:GpStop<cr>]] },
+    },
+  },
   { "fladson/vim-kitty", ft = "kitty" },
   { "mrjones2014/smart-splits.nvim", build = "./kitty/install-kittens.bash",
     config = function()
