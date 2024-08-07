@@ -67,6 +67,7 @@ elif [[ $(uname) == "Linux" ]]; then
     if [[ ! -d ~/.dotfiles ]]; then
         git clone https://github.com/gnudad/dotfiles.git ~/.dotfiles
         ln -sf ~/.dotfiles/zshrc ~/.zshrc
+        rm -rf ~/.config/nvim
     fi
     if [[ ! -d ~/.config/nvim ]]; then
         mkdir -p ~/.config/nvim
