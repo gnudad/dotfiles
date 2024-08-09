@@ -280,8 +280,8 @@ require("lazy").setup({
           virtual_text = s,
           severity_sort = true,
         })
-        vim.keymap.set('n', '[d', function() vim.diagnostic.goto_prev(s) end)
-        vim.keymap.set('n', ']d', function() vim.diagnostic.goto_next(s) end)
+        vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev(s) end)
+        vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next(s) end)
       end
       vim.keymap.set("n", "<leader>de", function() update_severity("ERROR") end)
       vim.keymap.set("n", "<leader>da", function() update_severity("HINT") end)
