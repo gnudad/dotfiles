@@ -211,6 +211,8 @@ require("lazy").setup({
       { "<leader><tab>", [[<cmd>Telescope buffers sort_lastused=true<cr>]] },
       { "<leader>*", [[<cmd>Telescope grep_string<cr>]] },
       { "<leader>/", [[<cmd>Telescope live_grep<cr>]] },
+      { "<leader>lo", [[<cmd>Telescope lsp_document_symbols<cr>]] },
+      { "<leader>lw", [[<cmd>Telescope lsp_dynamic_workspace_symbols<cr>]] },
       { "<leader>r", [[<cmd>Telescope resume<cr>]] },
       { "<leader>z", [[<cmd>Telescope zoxide list<cr>]] },
       { "<leader>y", [[<cmd>Telescope yank_history<cr>]] },
