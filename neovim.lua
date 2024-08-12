@@ -556,6 +556,7 @@ require("lazy").setup({
         pattern = "http",
         callback = function()
           vim.keymap.set("n", "<leader><cr>", require("kulala").run, { buffer = 0 })
+          vim.keymap.set("n", "<leader>v", require("kulala").toggle_view, { buffer = 0 })
         end
       })
     end,
