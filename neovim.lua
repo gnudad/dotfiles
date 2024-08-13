@@ -590,7 +590,6 @@ require("lazy").setup({
             disable = false,
             secret = { "cat", vim.fn.expand("~/.dotfiles/openai.key") },
           },
-          ollama = { disable = false },
         },
         agents = {
           { name = "ChatClaude-3-Haiku", disable = true },
