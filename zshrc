@@ -10,6 +10,7 @@ alias s="kitten ssh"
 alias ls="ls --color"
 alias ll="ls -al"
 alias lt="ll -t | less -FR"
+function mkcd() { mkdir -p "$@" && cd "$@"; }
 
 # Bootstrap Zinit plugin manager
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
