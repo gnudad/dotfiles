@@ -82,7 +82,7 @@ require("lazy").setup({
       require("fidget").setup({
         notification = { override_vim_notify = true },
       })
-      vim.keymap.set("n", "<leader>F", [[<cmd>Fidget history<cr>]])
+      vim.keymap.set("n", "<leader>h", [[<cmd>Fidget history<cr>]])
     end,
   },
   { "stevearc/oil.nvim", lazy = false,
@@ -180,6 +180,7 @@ require("lazy").setup({
     config = function()
       require("telescope").setup({
         defaults = {
+          file_ignore_patterns = { ".DS_Store", ".git/", ".venv/" },
           layout_strategy = "vertical",
           mappings = {
             i = {
@@ -207,7 +208,8 @@ require("lazy").setup({
     end,
     keys = {
       { "<leader>p", [[<cmd>Telescope projects<cr>]] },
-      { "<leader>f", [[<cmd>Telescope find_files<cr>]] },
+      { "<leader>f", [[<cmd>Telescope find_files hidden=true<cr>]] },
+      { "<leader>F", [[<cmd>Telescope find_files hidden=true no_ignore=true<cr>]] },
       { "<leader><tab>", [[<cmd>Telescope buffers sort_lastused=true<cr>]] },
       { "<leader>*", [[<cmd>Telescope grep_string<cr>]] },
       { "<leader>/", [[<cmd>Telescope live_grep<cr>]] },
