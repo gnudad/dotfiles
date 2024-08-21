@@ -245,7 +245,7 @@ require("lazy").setup({
   },
   { "neovim/nvim-lspconfig",
     dependencies = "williamboman/mason-lspconfig.nvim",
-    ft = { "go", "html", "javascript", "json", "lua", "php", "python" },
+    ft = { "go", "html", "javascript", "lua", "php", "python" },
     config = function()
       require("mason-lspconfig").setup({
         handlers = {
@@ -315,6 +315,7 @@ require("lazy").setup({
     end,
   },
   { "stevearc/conform.nvim",
+    dependencies = "williamboman/mason.nvim",
     opts = {
         formatters_by_ft = {
           go = { "gofmt" },
