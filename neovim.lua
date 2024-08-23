@@ -318,7 +318,10 @@ require("lazy").setup({
     dependencies = "williamboman/mason.nvim",
     opts = {
         formatters_by_ft = {
+          css = { "prettier" },
           go = { "gofmt" },
+          html = { "prettier" },
+          javascript = { "prettier" },
           json = { "jq" },
           python = { "ruff_format" },
         },
