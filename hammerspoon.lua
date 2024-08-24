@@ -87,10 +87,6 @@ local keymaps = {
     [{ "alt", "k" }] = { "cmd", "up" },
     [{ "alt", "l" }] = { "cmd", "right" },
   },
-  Finder = {
-    [{ "cmd", "h" }] = { "cmd", "up" },
-    [{ "cmd", "l" }] = { "cmd", "down" },
-  },
   Mail = {
     [{ "alt", "j" }] = { "alt,cmd", "down" },
     [{ "alt", "k" }] = { "alt,cmd", "up" },
