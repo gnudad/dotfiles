@@ -262,11 +262,11 @@ require("lazy").setup({
               settings = { python = { pythonPath = ".venv/bin/python" } },
             })
           end,
-          ["ruff_lsp"] = function()
-            require("lspconfig").ruff_lsp.setup({
+          ["ruff"] = function()
+            require("lspconfig").ruff.setup({
               ---@diagnostic disable-next-line: unused-local
               on_attach = function(client, bufnr)
-                -- Prevent "No information available" from ruff-lsp on vim.lsp.buf.hover()
+                -- Prevent "No information available" from ruff on vim.lsp.buf.hover()
                 client.server_capabilities.hoverProvider = false
               end,
             })
