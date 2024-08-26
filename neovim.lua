@@ -418,7 +418,7 @@ require("lazy").setup({
     config = function()
       vim.keymap.set({ "n", "x", "o" }, "s", [[<Plug>(leap)]])
       vim.keymap.set({ "n",          }, "S", [[<Plug>(leap-from-window)]])
-      require("leap.user").set_repeat_keys("<tab>", "<backspace>")
+      require("leap.user").set_repeat_keys("<enter>", "<backspace>")
     end,
   },
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate",
