@@ -539,6 +539,12 @@ require("lazy").setup({
   { "tzachar/highlight-undo.nvim", config = true },
   { "utilyre/sentiment.nvim", config = true },
   { "junegunn/vim-easy-align", keys = {{ "gA", mode = { "x" }, [[<Plug>(EasyAlign)]] }} },
+  { "johmsalas/text-case.nvim",
+    opts = { default_keymappings_enabled = false },
+    keys = {{ "gt", mode = { "x" }, function()
+      require("textcase").visual("to_title_case")
+    end }},
+  },
   { "brenoprata10/nvim-highlight-colors", config = true },
   { "kevinhwang91/nvim-ufo",
     dependencies = "kevinhwang91/promise-async",
