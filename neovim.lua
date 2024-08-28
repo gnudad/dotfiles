@@ -561,6 +561,7 @@ require("lazy").setup({
       vim.api.nvim_set_hl(0, "UfoFoldedEllipsis", { link = "FloatTitle" })
     end,
   },
+  { "nvim-pack/nvim-spectre", keys = {{ "<leader>?", [[<cmd>Spectre<cr>]] }} },
   { "mistweaverco/kulala.nvim", ft = "http",
     init = function()
       vim.filetype.add({ extension = { http = "http" } })
