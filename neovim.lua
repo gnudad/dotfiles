@@ -634,6 +634,11 @@ require("lazy").setup({
       { "\\s", mode = { "n", "x" }, [[:GpStop<cr>]] },
     },
   },
+  { "gnudad/hackernews.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
+    cmd = "HackerNews",
+    keys = {{ "<leader>H", [[<cmd>HackerNews<cr>]] }},
+  },
   { "fladson/vim-kitty", ft = "kitty" },
   { "mrjones2014/smart-splits.nvim", build = "./kitty/install-kittens.bash",
     config = function()
