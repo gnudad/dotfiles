@@ -155,8 +155,10 @@ require("lazy").setup({
         disable_hint = true,
         disable_insert_on_commit = true,
         console_timeout = 5000,
-        ---@diagnostic disable-next-line: missing-fields
-        sections = { untracked = { folded = true } },
+        graph_style = "kitty",
+        sections = {
+          untracked = { folded = true, hidden = false },
+        },
       })
     end,
     keys = {{ "<leader>gg", [[<cmd>silent wa<cr><cmd>Neogit kind=replace<cr>]] }},
