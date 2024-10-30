@@ -22,7 +22,7 @@ function v() {
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-source "${ZINIT_HOME}/zinit.zsh"
+declare -A ZINIT; ZINIT[NO_ALIASES]=1; source "${ZINIT_HOME}/zinit.zsh"
 
 # Plugins
 zinit light sindresorhus/pure
@@ -67,10 +67,10 @@ if [[ $(uname) == "Darwin" ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 
 elif [[ $(uname) == "Linux" ]]; then
-    zi ice from"gh-r" as"program"; zi light junegunn/fzf
-    zi ice from"gh-r" as"program" pick"nvim*/bin/nvim"; zi light neovim/neovim
-    zi ice from"gh-r" as"program" pick"rg/rg"; zi light BurntSushi/ripgrep
-    zi ice from"gh-r" as"program"; zi light ajeetdsouza/zoxide
+    zinit ice from"gh-r" as"program"; zinit light junegunn/fzf
+    zinit ice from"gh-r" as"program" pick"nvim*/bin/nvim"; zinit light neovim/neovim
+    zinit ice from"gh-r" as"program" pick"rg/rg"; zinit light BurntSushi/ripgrep
+    zinit ice from"gh-r" as"program"; zinit light ajeetdsouza/zoxide
     if [[ ! -d ~/.dotfiles ]]; then
         git clone https://github.com/gnudad/dotfiles.git ~/.dotfiles
         ln -sf ~/.dotfiles/zshrc ~/.zshrc
