@@ -5,12 +5,18 @@ setopt HIST_IGNORE_DUPS
 setopt SHARE_HISTORY
 export EDITOR=nvim
 
-alias v="nvim $1"
-alias s="kitten ssh"
 alias ls="ls --color"
 alias ll="ls -al"
 alias lt="ll -t | less -FR"
+alias s="kitten ssh"
 function mkcd() { mkdir -p "$@" && cd "$@"; }
+function v() {
+    nvim $1
+    if [[ -f /tmp/.oil.nvim.cd ]]; then
+        cd $(cat /tmp/.oil.nvim.cd)
+        rm /tmp/.oil.nvim.cd
+    fi
+}
 
 # Bootstrap Zinit plugin manager
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"

@@ -106,6 +106,14 @@ require("lazy").setup({
           ["<A-y>"] = function() require("osc52").copy(
             require("oil").get_current_dir() .. require("oil").get_cursor_entry().name
           ) end,
+          ["Q"] = function()
+            local file = io.open("/tmp/.oil.nvim.cd", "w")
+            if file ~= nil then
+              file:write(require("oil").get_current_dir())
+              file:close()
+            end
+            vim.cmd("qa!")
+          end,
         },
         win_options = { winbar = "%{v:lua.require('oil').get_current_dir()}" },
       })
