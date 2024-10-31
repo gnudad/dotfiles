@@ -85,11 +85,22 @@ require("lazy").setup({
       vim.keymap.set("n", "<leader>h", [[<cmd>Fidget history<cr>]])
     end,
   },
-  { "stevearc/oil.nvim", lazy = false,
+  { "stevearc/oil.nvim",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
       "ojroques/nvim-osc52",
     },
+    init = function()
+      vim.g.loaded_netrwPlugin = 1
+      vim.api.nvim_create_autocmd("BufEnter", {
+        callback = vim.schedule_wrap(function()
+          local bufname = vim.api.nvim_buf_get_name(0)
+          if vim.fn.isdirectory(bufname) == 1 then
+            vim.cmd("Oil " .. bufname)
+          end
+        end),
+      })
+    end,
     config = function()
       require("oil").setup({
         skip_confirm_for_simple_edits = true,
@@ -119,6 +130,7 @@ require("lazy").setup({
       })
       vim.api.nvim_set_hl(0, "WinBar", { link = "Title" })
     end,
+    cmd = "Oil",
     keys = {{"-", [[<cmd>Oil<cr>]] }},
   },
   { "aymericbeaumet/vim-symlink" },
