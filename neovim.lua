@@ -330,7 +330,7 @@ require("lazy").setup({
     dependencies = "nvim-telescope/telescope.nvim",
     keys = {{ "ga", function() require("tiny-code-action").code_action() end }},
   },
-  { "smjonas/inc-rename.nvim",
+  { "smjonas/inc-rename.nvim", event = "LspAttach",
     config = function()
       require("inc_rename").setup({})
       vim.keymap.set("n", "gR", function()
@@ -405,7 +405,7 @@ require("lazy").setup({
     end,
     keys = {{ "<leader>c", [[<cmd>NvimCmpToggle<cr>]] }}
   },
-  { "ray-x/lsp_signature.nvim",
+  { "ray-x/lsp_signature.nvim", event = "LspAttach",
     config = function()
       require("lsp_signature").setup({
         hint_enable = false,
