@@ -51,6 +51,8 @@ require("lazy").setup({
           vim.api.nvim_set_hl(0, "@variable.member", { link = "Fg" })
           vim.api.nvim_set_hl(0, "DiagnosticUnnecessary", { link = "DiagnosticUnderlineHint" })
           vim.api.nvim_set_hl(0, "MatchParen", { link = "FloatTitle" })
+          vim.api.nvim_set_hl(0, "NeogitHunkHeaderCursor", { link = "TabLine" })
+          vim.api.nvim_set_hl(0, "TabLineFill", { link = "PmenuExtra" })
         end,
       })
       vim.cmd.colorscheme("gruvbox-material")
