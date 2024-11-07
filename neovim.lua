@@ -585,6 +585,14 @@ require("lazy").setup({
       vim.api.nvim_set_hl(0, "UfoFoldedEllipsis", { link = "FloatTitle" })
     end,
   },
+  { "cdmill/focus.nvim",
+    config = true,
+    keys = {
+      { "<leader>n", [[:Narrow<cr>]], mode = { "n" } },
+      { "<leader>n", [[:'<,'>Narrow<cr>]], mode = { "x" } },
+      { "<leader>Z", [[:Zen<cr>]] },
+    },
+  },
   { "nvim-pack/nvim-spectre",
     opts = {
       replace_engine = {
