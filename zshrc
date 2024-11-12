@@ -45,6 +45,7 @@ if [[ $(uname) == "Darwin" ]]; then
         brew bundle --file=~/.dotfiles/Brewfile
     fi
     if [[ ! -d ~/.dotfiles ]]; then
+        xcode-select --install
         git clone git@github.com:gnudad/dotfiles.git ~/.dotfiles
         ln -sf ~/.dotfiles/zshrc ~/.zshrc
         touch ~/.hushlogin
