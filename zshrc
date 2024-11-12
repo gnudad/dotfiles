@@ -49,6 +49,11 @@ if [[ $(uname) == "Darwin" ]]; then
         git clone git@github.com:gnudad/dotfiles.git ~/.dotfiles
         ln -sf ~/.dotfiles/zshrc ~/.zshrc
         touch ~/.hushlogin
+        cd ~/Downloads/
+        curl -LO "https://www.python.org/ftp/python/2.7.18/python-2.7.18-macosx10.9.pkg"
+        open -W python-2.7.18-macosx10.9.pkg
+        rm /usr/local/bin/python
+        rm /usr/local/bin/pip
     fi
     if [[ ! -d ~/.config/hammerspoon ]]; then
         defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
