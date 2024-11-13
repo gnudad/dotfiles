@@ -28,9 +28,9 @@ hs.loadSpoon("Rectangle"):bindHotkeys({
   left_half   = { mods, "a" },  center_half = { mods, "s" },  right_half   = { mods, "d" },
   bottom_left = { mods, "z" },  bottom_half = { mods, "x" },  bottom_right = { mods, "c" },
   maximize    = { mods, "f" },  almost_max  = { mods, "g" },
-  center      = { mods, "0" },  smaller     = { mods, "-" },  larger       = { mods, "=" },
+  center      = { mods, "m" },  smaller     = { mods, "-" },  larger       = { mods, "=" },
   focus_left  = { mods, "h" },  focus_right = { mods, "l" },
-  focus_up    = { mods, "k" },  focus_down  = { mods, "j" },
+  focus_up    = { mods, "k" },  focus_down  = { mods, "j" },  focus_under = { mods, "i" },
 })
 
 -- Switch apps using the right command key
@@ -107,7 +107,7 @@ for lhs, rhs in pairs(shiftmaps) do keymaps.default[lhs] = rhs end
 hs.loadSpoon("KeyMapper"):bindHotkeys(keymaps):start()
 
 -- Toggle macOS dark mode
-hs.hotkey.bind({ "ctrl", "cmd" }, "m", function()
+hs.hotkey.bind({ "ctrl", "cmd" }, "n", function()
   hs.osascript.applescript(
     [[tell application "System Events" to tell appearance preferences to set dark mode to ]]
     .. tostring(hs.host.interfaceStyle() ~= "Dark")
