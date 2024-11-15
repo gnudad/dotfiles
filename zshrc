@@ -41,19 +41,19 @@ ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
 if [[ $(uname) == "Darwin" ]]; then
     if [[ ! -d /opt/homebrew ]]; then
+        xcode-select --install
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         brew bundle --file=~/.dotfiles/Brewfile
+        curl -L "https://www.python.org/ftp/python/2.7.18/python-2.7.18-macosx10.9.pkg" \
+            --output ~/Downloads/python-2.7.18-macosx10.9.pkg
+        open -W ~/Downloads/python-2.7.18-macosx10.9.pkg
+        rm /usr/local/bin/python
+        rm /usr/local/bin/pip
     fi
     if [[ ! -d ~/.dotfiles ]]; then
-        xcode-select --install
         git clone git@github.com:gnudad/dotfiles.git ~/.dotfiles
         ln -sf ~/.dotfiles/zshrc ~/.zshrc
         touch ~/.hushlogin
-        cd ~/Downloads/
-        curl -LO "https://www.python.org/ftp/python/2.7.18/python-2.7.18-macosx10.9.pkg"
-        open -W python-2.7.18-macosx10.9.pkg
-        rm /usr/local/bin/python
-        rm /usr/local/bin/pip
     fi
     if [[ ! -d ~/.config/hammerspoon ]]; then
         defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
