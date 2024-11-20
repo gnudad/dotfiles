@@ -681,6 +681,9 @@ require("lazy").setup({
     cmd = "HackerNews",
     keys = {{ "<leader>H", [[<cmd>HackerNews<cr>]] }},
   },
+  { "tadaa/vimade", event = "VeryLazy",
+    opts = { ncmode = "windows", fadelevel = 0.7 },
+  },
   { "fladson/vim-kitty", ft = "kitty" },
   { "mrjones2014/smart-splits.nvim", build = "./kitty/install-kittens.bash",
     config = function()
