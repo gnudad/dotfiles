@@ -207,7 +207,6 @@ require("lazy").setup({
       local state = require("telescope.actions.state")
       require("telescope").setup({
         defaults = {
-          file_ignore_patterns = { ".DS_Store", ".git/", ".venv/" },
           layout_strategy = "vertical",
           mappings = {
             i = {

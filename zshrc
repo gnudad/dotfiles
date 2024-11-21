@@ -53,6 +53,7 @@ if [[ $(uname) == "Darwin" ]]; then
     fi
     if [[ ! -d ~/.dotfiles ]]; then
         git clone git@github.com:gnudad/dotfiles.git ~/.dotfiles
+        git config --global core.excludesFile ~/.dotfiles/.gitignore
         ln -sf ~/.dotfiles/zshrc ~/.zshrc
         touch ~/.hushlogin
     fi
