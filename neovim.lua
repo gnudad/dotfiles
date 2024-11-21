@@ -183,6 +183,7 @@ require("lazy").setup({
         },
       })
     end,
+    cmd = "Neogit",
     keys = {{ "<leader>gg", [[<cmd>silent wa<cr><cmd>Neogit kind=replace<cr>]] }},
   },
   { "tpope/vim-fugitive", keys = {{ "<leader>gb", [[<cmd>Git blame<cr>]] }} },
@@ -202,14 +203,24 @@ require("lazy").setup({
       { "jvgrootveld/telescope-zoxide" },
     },
     config = function()
+      local actions = require("telescope.actions")
+      local state = require("telescope.actions.state")
       require("telescope").setup({
         defaults = {
           file_ignore_patterns = { ".DS_Store", ".git/", ".venv/" },
           layout_strategy = "vertical",
           mappings = {
             i = {
-              ["<C-t>"] = require("trouble.sources.telescope").open,
               ["<esc>"] = require("telescope.actions").close,
+              ["<C-->"] = function(prompt_bufnr) -- Open Oil directory listing
+                actions.close(prompt_bufnr)
+                vim.cmd("Oil " .. state.get_selected_entry().value)
+              end,
+              ["<C-g>"] = function(prompt_bufnr) -- Open Neogit status
+                actions.close(prompt_bufnr)
+                vim.cmd("Neogit kind=replace cwd=" .. state.get_selected_entry().value)
+              end,
+              ["<C-t>"] = require("trouble.sources.telescope").open,
             },
           },
         },
