@@ -205,12 +205,19 @@ require("lazy").setup({
     config = function()
       local actions = require("telescope.actions")
       local state = require("telescope.actions.state")
+      local no_ignore = false
       require("telescope").setup({
         defaults = {
           layout_strategy = "vertical",
+          file_ignore_patterns = { ".DS_Store", ".git/", ".venv/" },
           mappings = {
             i = {
               ["<esc>"] = require("telescope.actions").close,
+              ["<C-.>"] = function(prompt_bufnr)
+                no_ignore = not no_ignore
+                actions.close(prompt_bufnr)
+                require("telescope.builtin").find_files({ hidden=true, no_ignore=no_ignore })
+              end,
               ["<C-->"] = function(prompt_bufnr) -- Open Oil directory listing
                 actions.close(prompt_bufnr)
                 vim.cmd("Oil " .. state.get_selected_entry().value)
@@ -243,7 +250,6 @@ require("lazy").setup({
     keys = {
       { "<leader>p", [[<cmd>Telescope projects<cr>]] },
       { "<leader>f", [[<cmd>Telescope find_files hidden=true<cr>]] },
-      { "<leader>F", [[<cmd>Telescope find_files hidden=true no_ignore=true<cr>]] },
       { "<leader><tab>", [[<cmd>Telescope buffers sort_lastused=true<cr>]] },
       { "<leader>*", [[<cmd>Telescope grep_string<cr>]] },
       { "<leader>/", [[<cmd>Telescope live_grep<cr>]] },
