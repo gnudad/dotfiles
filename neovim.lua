@@ -416,7 +416,7 @@ require("lazy").setup({
   },
   { "ray-x/lsp_signature.nvim", event = "LspAttach",
     config = function()
-      require("lsp_signature").setup({
+      require("lsp_signature").on_attach({
         hint_enable = false,
         handler_opts = { border = "none" },
         toggle_key = "<C-s>",
