@@ -314,24 +314,17 @@ require("lazy").setup({
         },
       })
       vim.keymap.set("n", "ge", vim.diagnostic.open_float)
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
       vim.keymap.set("n", "<leader>li", [[<cmd>LspInfo<cr>]])
       vim.keymap.set("n", "<leader>lr", [[<cmd>LspRestart<cr>]])
-      local function update_severity(s)
-        if s ~= false then s = { severity = { min = vim.diagnostic.severity[s] } } end
+      vim.keymap.set("n", "<leader>dt", function()
         vim.diagnostic.config({
-          signs = false,
-          underline = s,
-          virtual_text = s,
-          severity_sort = true,
+          virtual_text = not vim.diagnostic.config().virtual_text,
         })
-        vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev(s) end)
-        vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next(s) end)
-      end
-      vim.keymap.set("n", "<leader>de", function() update_severity("ERROR") end)
-      vim.keymap.set("n", "<leader>da", function() update_severity("HINT") end)
-      vim.keymap.set("n", "<leader>do", function() update_severity(false) end)
-      update_severity("HINT")
-    end,
+      end)
+      vim.diagnostic.config({ severity_sort = true, signs = false })
+    end
   },
   { "folke/lazydev.nvim", ft = "lua",
     dependencies = "Bilal2453/luvit-meta",
