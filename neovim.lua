@@ -547,12 +547,17 @@ require("lazy").setup({
       vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
     end,
   },
-  { "chrisgrieser/nvim-various-textobjs", opts = {
-    keymaps = {
-      useDefaults = true,
-      disabledDefaults = { "gw", "r" }
-    },
-  }},
+  { "chrisgrieser/nvim-various-textobjs",
+    config = function()
+      require("various-textobjs").setup({
+        keymaps = {
+          useDefaults = true,
+          disabledDefaults = { "gw", "r" }
+        },
+      })
+      vim.keymap.set({ "o", "x" }, "ag", "gG", { remap = true })
+    end,
+  },
   { "wellle/targets.vim" },
   { "windwp/nvim-autopairs", event = "InsertEnter", config = true },
   { "windwp/nvim-ts-autotag", config = true },
@@ -724,11 +729,6 @@ vim.keymap.set("x", "/", "<Esc>/\\%V")
 
 -- Select last changed or pasted region
 vim.keymap.set("n", "gp", [[ "`[" . getregtype() . "`]" ]], { expr = true })
-
--- Lazy motions
-vim.keymap.set({ "o", "x" }, "ag", "gG", { remap = true })
-vim.keymap.set({ "o", "x" }, "q", "iq", { remap = true })
-vim.keymap.set({ "o", "x" }, "w", "iw", { remap = true })
 
 -- Fix j/k movements in wrapped lines
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
