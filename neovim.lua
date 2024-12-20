@@ -150,8 +150,8 @@ require("lazy").setup({
       local gs = require("gitsigns")
       gs.setup({})
       local function get_range() return { vim.fn.line("."), vim.fn.line("v") } end
-      vim.keymap.set({"n", "x", "o"}, "[g", gs.prev_hunk)
-      vim.keymap.set({"n", "x", "o"}, "]g", gs.next_hunk)
+      vim.keymap.set({"n", "x", "o"}, "[g", function() gs.nav_hunk("prev") end)
+      vim.keymap.set({"n", "x", "o"}, "]g", function() gs.nav_hunk("next") end)
       vim.keymap.set("n", "<leader>gl", function() gs.blame_line({ full = true }) end)
       vim.keymap.set("n", "<leader>gp", gs.preview_hunk)
       vim.keymap.set("n", "<leader>gr", gs.reset_hunk)
