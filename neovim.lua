@@ -548,8 +548,10 @@ require("lazy").setup({
     end,
   },
   { "chrisgrieser/nvim-various-textobjs", opts = {
-    useDefaultKeymaps = true,
-    disabledKeymaps = { "gw", "r" },
+    keymaps = {
+      useDefaults = true,
+      disabledDefaults = { "gw", "r" }
+    },
   }},
   { "wellle/targets.vim" },
   { "windwp/nvim-autopairs", event = "InsertEnter", config = true },
