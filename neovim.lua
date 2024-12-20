@@ -362,65 +362,34 @@ require("lazy").setup({
       require("conform").format({ lsp_format = "fallback" })
     end }},
   },
-  { "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-calc",
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-path",
-      "folke/lazydev.nvim",
-      "L3MON4D3/LuaSnip",
-      "saadparwaiz1/cmp_luasnip",
-      "nvim-autopairs",
-      "gitaarik/nvim-cmp-toggle",
-    },
-    event = "InsertEnter",
+  { "saghen/blink.cmp", version = 'v0.*',
     config = function()
-      local cmp = require("cmp")
-      local luasnip = require("luasnip")
-      cmp.setup({
-        snippet = {
-          expand = function(args) luasnip.lsp_expand(args.body) end,
+      require("blink-cmp").setup({
+        keymap = { preset = "super-tab" },
+        sources = {
+          providers = {
+            buffer = {
+              fallback_for = {},
+              score_offset = -7,
+            },
+          },
         },
-        mapping = cmp.mapping.preset.insert({
-          ["<tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then cmp.confirm({ select = true })
-            elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
-            else fallback() end
-          end, { "i", "s" }),
-          ["<S-tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then cmp.abort()
-            elseif luasnip.jumpable(-1) then luasnip.jump(-1)
-            else fallback() end
-          end, { "i", "s" }),
-          ["<C-u>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-d>"] = cmp.mapping.scroll_docs(4),
-        }),
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "lazydev" },
-          { name = "buffer", max_item_count = 5,
-            option = { get_bufnrs = function() return vim.api.nvim_list_bufs() end } },
-          { name = "path", option = { get_cwd = function() return vim.fn.getcwd() end } },
-          { name = "calc" },
-          { name = "luasnip" },
-        }),
-        ---@diagnostic disable-next-line: missing-fields
-        matching = { disallow_fuzzy_matching = true, },
+        completion = {
+          accept = {
+            auto_brackets = {
+              enabled = true,
+              semantic_token_resolution = { enabled = false },
+            },
+          },
+          documentation = { auto_show = true },
+        },
+        appearance = {
+          use_nvim_cmp_as_default = true,
+          nerd_font_variant = "normal",
+        },
+        signature = { enabled = true },
       })
-      -- Insert `(` after select function or method item
-      cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
-    end,
-    keys = {{ "<leader>c", [[<cmd>NvimCmpToggle<cr>]] }}
-  },
-  { "ray-x/lsp_signature.nvim", event = "LspAttach",
-    config = function()
-      require("lsp_signature").on_attach({
-        hint_enable = false,
-        handler_opts = { border = "none" },
-        toggle_key = "<C-s>",
-      })
-      vim.keymap.set("n", "<C-s>", function() vim.lsp.buf.signature_help() end)
+      vim.keymap.set({ "n", "i" }, "<C-s>", function() vim.lsp.buf.signature_help() end)
     end,
   },
   { "gbprod/yanky.nvim",
