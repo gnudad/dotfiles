@@ -316,7 +316,7 @@ require("lazy").setup({
       vim.keymap.set("n", "ge", vim.diagnostic.open_float)
       vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
       vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-      vim.keymap.set("n", "<leader>li", [[<cmd>LspInfo<cr>]])
+      vim.keymap.set("n", "<leader>li", [[<cmd>silent check lspconfig<cr>]])
       vim.keymap.set("n", "<leader>lr", [[<cmd>LspRestart<cr>]])
       vim.keymap.set("n", "<leader>dt", function()
         vim.diagnostic.config({
