@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields, unused-local
 vim.g.mapleader = " "
 
 vim.o.cmdheight = 0
@@ -291,7 +292,6 @@ require("lazy").setup({
         handlers = {
           function(server_name)
             require("lspconfig")[server_name].setup({
-              ---@diagnostic disable-next-line: unused-local
               on_attach = function(client, bufnr)
                 client.server_capabilities.semanticTokensProvider = nil
               end,
@@ -304,7 +304,6 @@ require("lazy").setup({
           end,
           ["ruff"] = function()
             require("lspconfig").ruff.setup({
-              ---@diagnostic disable-next-line: unused-local
               on_attach = function(client, bufnr)
                 -- Prevent "No information available" from ruff on vim.lsp.buf.hover()
                 client.server_capabilities.hoverProvider = false
@@ -456,7 +455,6 @@ require("lazy").setup({
   },
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate",
     config = function()
-      ---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup({
         auto_install = true,
         highlight = { enable = true },
@@ -503,7 +501,6 @@ require("lazy").setup({
   { "nvim-treesitter/nvim-treesitter-textobjects",
     dependencies = "nvim-treesitter/nvim-treesitter",
     config = function()
-      ---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup({
         textobjects = {
           select = {
@@ -582,7 +579,6 @@ require("lazy").setup({
   { "kevinhwang91/nvim-ufo",
     dependencies = "kevinhwang91/promise-async",
     config = function()
-      ---@diagnostic disable-next-line: missing-fields
       require("ufo").setup({
         provider_selector = function() return { "treesitter", "indent" } end,
       })
