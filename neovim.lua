@@ -233,10 +233,10 @@ require("lazy").setup({
         extensions = {
           zoxide = {
             mappings = {
-              default = {
-                after_action = function(selection)
-                  vim.cmd.edit(selection.path)
-                end,
+              default = { action = function(selection) vim.cmd.edit(selection.path) end },
+              ["<C-d>"] = {
+                action = function(selection) vim.fn.system("zoxide remove " .. selection.path) end,
+                after_action = function() vim.cmd([[Telescope zoxide list]]) end,
               },
             },
           },
