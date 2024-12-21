@@ -336,7 +336,7 @@ require("lazy").setup({
   },
   { "rachartier/tiny-code-action.nvim", config = true,
     dependencies = "nvim-telescope/telescope.nvim",
-    keys = {{ "ga", function() require("tiny-code-action").code_action() end }},
+    keys = {{ "ga", function() require("tiny-code-action").code_action({}) end }},
   },
   { "smjonas/inc-rename.nvim", event = "LspAttach",
     config = function()
