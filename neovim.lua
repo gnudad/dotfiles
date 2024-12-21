@@ -136,7 +136,6 @@ require("lazy").setup({
     cmd = "Oil",
     keys = {{"-", [[<cmd>Oil<cr>]] }},
   },
-  { "aymericbeaumet/vim-symlink" },
   { "LunarVim/bigfile.nvim" },
   { "tpope/vim-sleuth",
     config = function()
@@ -323,6 +322,7 @@ require("lazy").setup({
         })
       end)
       vim.diagnostic.config({ severity_sort = true, signs = false })
+      vim.keymap.set({ "n", "i" }, "<C-s>", function() vim.lsp.buf.signature_help() end)
     end
   },
   { "folke/lazydev.nvim", ft = "lua",
@@ -362,7 +362,7 @@ require("lazy").setup({
       require("conform").format({ lsp_format = "fallback" })
     end }},
   },
-  { "saghen/blink.cmp", version = 'v0.*',
+  { "saghen/blink.cmp", version = 'v0.*', event = "InsertEnter",
     config = function()
       require("blink-cmp").setup({
         keymap = { preset = "super-tab" },
@@ -389,7 +389,6 @@ require("lazy").setup({
         },
         signature = { enabled = true },
       })
-      vim.keymap.set({ "n", "i" }, "<C-s>", function() vim.lsp.buf.signature_help() end)
     end,
   },
   { "gbprod/yanky.nvim",
@@ -417,10 +416,12 @@ require("lazy").setup({
   },
   { "ggandor/leap.nvim",
     config = function()
-      vim.keymap.set({ "n", "x", "o" }, "s", [[<Plug>(leap)]])
-      vim.keymap.set({ "n",          }, "S", [[<Plug>(leap-from-window)]])
       require("leap.user").set_repeat_keys("<enter>", "<backspace>")
     end,
+    keys = {
+      { "s", [[<Plug>(leap)]], mode = { "n", "x", "o" } },
+      { "S", [[<Plug(leap-from-window)]] },
+    },
   },
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate",
     config = function()
@@ -459,6 +460,7 @@ require("lazy").setup({
     end,
   },
   { "nvim-treesitter/nvim-treesitter-context",
+    ft = function() return require("nvim-treesitter.parsers").available_parsers() end,
     config = function()
       require("treesitter-context").setup({ enable = false })
       vim.keymap.set("n", "<leader>`", [[<cmd>TSContextToggle<cr>]])
@@ -468,7 +470,7 @@ require("lazy").setup({
     end,
   },
   { "nvim-treesitter/nvim-treesitter-textobjects",
-    dependencies = "nvim-treesitter/nvim-treesitter",
+    ft = function() return require("nvim-treesitter.parsers").available_parsers() end,
     config = function()
       require("nvim-treesitter.configs").setup({
         textobjects = {
@@ -519,17 +521,14 @@ require("lazy").setup({
   { "chrisgrieser/nvim-various-textobjs",
     config = function()
       require("various-textobjs").setup({
-        keymaps = {
-          useDefaults = true,
-          disabledDefaults = { "gw", "r" }
-        },
+        keymaps = { useDefaults = true },
       })
       vim.keymap.set({ "o", "x" }, "ag", "gG", { remap = true })
     end,
   },
   { "wellle/targets.vim" },
   { "windwp/nvim-autopairs", event = "InsertEnter", config = true },
-  { "windwp/nvim-ts-autotag", config = true },
+  { "windwp/nvim-ts-autotag", config = true, ft = { "html", "php", "phtml", "xml" } },
   { "utilyre/sentiment.nvim", event = "VeryLazy", config = true },
   { "kylechui/nvim-surround", config = true, keys = {
       "ys", "ds", "cs", { "S", mode = { "x" } },
@@ -542,7 +541,7 @@ require("lazy").setup({
   { "chrishrb/gx.nvim", submodules = false, config = true,
     keys = {{ "gx", mode = { "n", "x" }, [[<cmd>Browse<cr>1<cr><cr>]] }},
   },
-  { "tzachar/highlight-undo.nvim", config = true },
+  { "tzachar/highlight-undo.nvim", config = true, keys = {{ "u" }} },
   { "utilyre/sentiment.nvim", config = true },
   { "junegunn/vim-easy-align", keys = {{ "gA", mode = { "x" }, [[<Plug>(EasyAlign)]] }} },
   { "johmsalas/text-case.nvim",
@@ -558,13 +557,25 @@ require("lazy").setup({
       require("ufo").setup({
         provider_selector = function() return { "treesitter", "indent" } end,
       })
-      vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-      vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-      vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
-      vim.keymap.set("n", "zm", require("ufo").closeFoldsWith)
+      vim.schedule(function()
+        vim.keymap.del("n", "zc")
+        vim.keymap.set("n", "zm", require("ufo").closeFoldsWith)
+        vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+        vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
+        vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+
+      end)
       vim.api.nvim_set_hl(0, "Folded", {})
       vim.api.nvim_set_hl(0, "UfoFoldedEllipsis", { link = "FloatTitle" })
     end,
+    keys = {
+      { "zc", function() vim.defer_fn(function() vim.cmd([[normal zc]]) end, 100) end },
+      { "zm", function()
+          local vcount = vim.v.count
+          vim.defer_fn(function() require("ufo").closeFoldsWith(vcount) end, 100)
+        end
+      },
+    },
   },
   { "cdmill/focus.nvim",
     config = true,
