@@ -521,7 +521,10 @@ require("lazy").setup({
   { "chrisgrieser/nvim-various-textobjs",
     config = function()
       require("various-textobjs").setup({
-        keymaps = { useDefaults = true },
+        keymaps = {
+          useDefaults = true,
+          disabledDefaults = { "n" },
+        },
       })
       vim.keymap.set({ "o", "x" }, "ag", "gG", { remap = true })
     end,
@@ -705,7 +708,7 @@ vim.keymap.set("i", "jk", "<esc>")
 vim.keymap.set("n", "<esc>", [[<cmd>nohlsearch<cr>]])
 
 -- Search in visual selection
-vim.keymap.set("x", "/", "<Esc>/\\%V")
+vim.keymap.set("x", "//", "<Esc>/\\%V")
 
 -- Select last changed or pasted region
 vim.keymap.set("n", "gp", [[ "`[" . getregtype() . "`]" ]], { expr = true })
