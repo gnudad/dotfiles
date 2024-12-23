@@ -230,6 +230,15 @@ require("lazy").setup({
             },
           },
         },
+        pickers = {
+          buffers = {
+            mappings = {
+              i = {
+                ["<C-d>"] = require("telescope.actions").delete_buffer,
+              },
+            },
+          },
+        },
         extensions = {
           zoxide = {
             mappings = {
