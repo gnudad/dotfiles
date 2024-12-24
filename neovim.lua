@@ -561,7 +561,7 @@ require("lazy").setup({
             { "<leader>J", [[<cmd>TSJJoin<cr>]] }},
   },
   { "chrishrb/gx.nvim", submodules = false, config = true,
-    keys = {{ "gx", mode = { "n", "x" }, [[<cmd>Browse<cr>1<cr><cr>]] }},
+    keys = {{ "gx", mode = { "n", "x" }, [[<cmd>Browse<cr>]] }},
   },
   { "tzachar/highlight-undo.nvim", config = true, keys = {{ "u" }} },
   { "utilyre/sentiment.nvim", config = true },
