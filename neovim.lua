@@ -377,11 +377,10 @@ require("lazy").setup({
         keymap = { preset = "super-tab" },
         sources = {
           providers = {
-            buffer = {
-              fallback_for = {},
-              score_offset = -7,
-            },
+            buffer = { score_offset = -3 },
+            lsp = { fallbacks = {} }, -- Always show buffer items
           },
+          cmdline = {}, -- Disable cmdline completions
         },
         completion = {
           accept = {
@@ -399,6 +398,17 @@ require("lazy").setup({
         signature = { enabled = true },
       })
     end,
+  },
+  { "chrisgrieser/nvim-scissors",
+    dependencies = "nvim-telescope/telescope.nvim",
+    opts = {
+      jsonFormatter = "jq",
+      backdrop = { enabled = false },
+    },
+    keys = {
+      { "<leader>sa", mode = { "n", "x" }, [[<cmd>ScissorsAddNewSnippet<cr>]] },
+      { "<leader>se", [[<cmd>silent ScissorsEditSnippet<cr>]] },
+    },
   },
   { "gbprod/yanky.nvim",
     dependencies = "kkharji/sqlite.lua",

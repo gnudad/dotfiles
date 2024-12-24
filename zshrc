@@ -71,6 +71,7 @@ if [[ $(uname) == "Darwin" ]]; then
     if [[ ! -d ~/.config/nvim ]]; then
         mkdir -p ~/.config/nvim
         ln -sf ~/.dotfiles/neovim.lua ~/.config/nvim/init.lua
+        ln -sf ~/.dotfiles/snippets ~/.config/nvim/snippets
     fi
     eval "$(/opt/homebrew/bin/brew shellenv)"
 
