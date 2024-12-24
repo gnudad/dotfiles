@@ -37,6 +37,8 @@ zinit snippet OMZP::fzf
 zinit light Aloxaf/fzf-tab
 
 # Plugin config
+export FZF_DEFAULT_OPTS="--bind 'tab:accept'"
+zstyle ':fzf-tab:*' fzf-bindings 'tab:accept'
 ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
