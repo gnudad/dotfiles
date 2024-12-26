@@ -216,14 +216,19 @@ require("lazy").setup({
               ["<C-.>"] = function(prompt_bufnr)
                 no_ignore = not no_ignore
                 actions.close(prompt_bufnr)
-                require("telescope.builtin").find_files({ hidden=true, no_ignore=no_ignore })
+                require("telescope.builtin").find_files({
+                  default_text=state.get_current_line(),
+                  hidden=true, no_ignore=no_ignore,
+                })
               end,
               ["<C-->"] = function(prompt_bufnr) -- Open Oil directory listing
                 actions.close(prompt_bufnr)
+                vim.api.nvim_set_current_dir(state.get_selected_entry().value)
                 vim.cmd("Oil " .. state.get_selected_entry().value)
               end,
               ["<C-g>"] = function(prompt_bufnr) -- Open Neogit status
                 actions.close(prompt_bufnr)
+                vim.api.nvim_set_current_dir(state.get_selected_entry().value)
                 vim.cmd("Neogit kind=replace cwd=" .. state.get_selected_entry().value)
               end,
               ["<C-t>"] = require("trouble.sources.telescope").open,
