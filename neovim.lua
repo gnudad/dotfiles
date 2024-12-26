@@ -679,6 +679,12 @@ require("lazy").setup({
           { name = "CodeGPT4o-mini", disable = true },
         },
       })
+      vim.api.nvim_create_autocmd("BufNew", {
+        pattern = "*/gp/chats/*.md",
+        callback = function()
+          vim.keymap.set("n", "<cr>", [[:GpChatRespond<cr>]], { buffer = true })
+        end,
+      })
     end,
     keys = {
       { "\\c", mode = { "n" }, [[:GpChatNew<cr>]] },
