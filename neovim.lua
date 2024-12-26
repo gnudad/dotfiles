@@ -382,7 +382,7 @@ require("lazy").setup({
         keymap = { preset = "super-tab" },
         sources = {
           providers = {
-            buffer = { score_offset = -3 },
+            buffer = { score_offset = -7 },
             lsp = { fallbacks = {} }, -- Always show buffer items
           },
           cmdline = {}, -- Disable cmdline completions
