@@ -4,6 +4,7 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_DUPS
 setopt SHARE_HISTORY
 export EDITOR=nvim
+unset zle_bracketed_paste
 
 alias ls="ls --color"
 alias ll="ls -al"
