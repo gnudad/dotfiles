@@ -22,7 +22,7 @@ vim.o.swapfile = false
 vim.o.tabstop = 2
 vim.o.textwidth = 88
 vim.o.title = true
-vim.o.titlestring = "%{fnamemodify(getcwd(), ':t')}"
+vim.o.titlestring = "(%{hostname()}) %{fnamemodify(getcwd(), ':t')}"
 vim.o.wrap = false
 
 -- Bootstrap lazy.nvim plugin manager

@@ -28,7 +28,6 @@ declare -A ZINIT; ZINIT[NO_ALIASES]=1; source "${ZINIT_HOME}/zinit.zsh"
 # Plugins
 zinit light sindresorhus/pure
 zinit light jeffreytse/zsh-vi-mode
-zinit light trystan2k/zsh-tab-title
 zinit light MichaelAquilina/zsh-autoswitch-virtualenv
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
