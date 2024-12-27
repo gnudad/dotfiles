@@ -83,7 +83,7 @@ elif [[ $(uname) == "Linux" ]]; then
     else
         zinit ice from"gh-r" as"program" pick"nvim*/bin/nvim"; zinit light neovim/neovim-releases
     fi
-    zinit ice from"gh-r" as"program" pick"rg/rg"; zinit light BurntSushi/ripgrep
+    zinit ice from"gh-r" as"program" pick"ripgrep*/rg"; zinit light BurntSushi/ripgrep
     zinit ice from"gh-r" as"program"; zinit light ajeetdsouza/zoxide
     if [[ ! -d ~/.dotfiles ]]; then
         git clone https://github.com/gnudad/dotfiles.git ~/.dotfiles
