@@ -638,7 +638,7 @@ require("lazy").setup({
     },
   },
   { "iamcco/markdown-preview.nvim", ft = "markdown",
-    build = function() vim.fn["mkdp#util#install"]() end,
+    build = [[cd app && npm install && git restore .]],
     config = function()
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "markdown",
