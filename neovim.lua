@@ -245,6 +245,7 @@ require("lazy").setup({
           },
         },
         extensions = {
+          fzf = { fuzzy = false },
           zoxide = {
             mappings = {
               default = { action = function(selection) vim.cmd.edit(selection.path) end },
