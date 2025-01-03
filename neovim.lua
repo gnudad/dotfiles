@@ -12,14 +12,14 @@ vim.o.laststatus = 3
 vim.o.linebreak = true
 vim.o.pumheight = 7
 vim.o.scrolloff = 5
-vim.o.shiftwidth = 2
+vim.o.shiftwidth = 4
 vim.o.sidescrolloff = 5
 vim.o.signcolumn = "yes"
 vim.o.smartcase = true
 vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.swapfile = false
-vim.o.tabstop = 2
+vim.o.tabstop = 4
 vim.o.textwidth = 88
 vim.o.title = true
 vim.o.titlestring = "(%{hostname()}) %{fnamemodify(getcwd(), ':t')}"
@@ -139,8 +139,11 @@ require("lazy").setup({
   { "LunarVim/bigfile.nvim" },
   { "tpope/vim-sleuth",
     config = function()
-      for _, ft in pairs({ "go", "php", "python" }) do
-        vim.g["sleuth_" .. ft .. "_defaults"] = "shiftwidth=4"
+      for _, ft in pairs({ "css", "html", "javascript", "lua" }) do
+        vim.g["sleuth_" .. ft .. "_defaults"] = "shiftwidth=2 tabstop=2"
+      end
+      for _, ft in pairs({ "go", "php" }) do
+        vim.g["sleuth_" .. ft .. "_defaults"] = "noexpandtab"
       end
     end,
   },
