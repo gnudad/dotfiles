@@ -556,7 +556,7 @@ require("lazy").setup({
       require("various-textobjs").setup({
         keymaps = {
           useDefaults = true,
-          disabledDefaults = { "n" },
+          disabledDefaults = { "n", "r" },
         },
       })
       vim.keymap.set({ "o", "x" }, "ag", "gG", { remap = true })
