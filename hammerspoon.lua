@@ -60,7 +60,7 @@ hs.loadSpoon("Rcmd"):bindHotkeys({
   m = "Music",
   n = "Notion",
   o = function()
-    local app = hs.application.open("OTP Manager", 5, false)
+    local app = hs.application.open("OTP Manager", 0, true)
     app:selectMenuItem("Open Main Window")
     app = hs.application.open("OTP Manager", 1, true)
     app:mainWindow():setTopLeft({0, 0})
