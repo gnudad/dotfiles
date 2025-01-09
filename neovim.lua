@@ -659,7 +659,24 @@ require("lazy").setup({
     keys = {{ "<leader>m", [[<cmd>MarkdownPreviewToggle<cr>]] }},
   },
   { "Robitx/gp.nvim",
+    dependencies = {
+      "undg/telescope-gp-agent-picker.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
     config = function()
+      local function add_agent(name, provider, model)
+        local chat = false
+        local prompt = require("gp.defaults").code_system_prompt
+        if string.sub(name, 1, 4) == "Chat" then
+          chat = true
+          prompt = require("gp.defaults").chat_system_prompt
+        end
+        return {
+          name = name, provider = provider, chat = chat, command = not chat,
+          model = { model = model, temperature = 0.7, top_p = 1.0 },
+          system_prompt = prompt,
+        }
+      end
       require("gp").setup({
         providers = {
           anthropic = {
@@ -672,42 +689,36 @@ require("lazy").setup({
           },
         },
         agents = {
-          { name = "ChatClaude-3-5-Sonnet", provider = "anthropic",
-            chat = true, command = false,
-            model = { model = "claude-3-5-sonnet-latest", temperature = 0.8, top_p = 1 },
-            system_prompt = require("gp.defaults").chat_system_prompt,
-          },
-          { name = "CodeClaude-3-5-Sonnet", provider = "anthropic",
-            chat = false, command = true,
-            model = { model = "claude-3-5-sonnet-latest", temperature = 0.8, top_p = 1 },
-            system_prompt = require("gp.defaults").code_system_prompt,
-          },
           { name = "ChatClaude-3-Haiku", disable = true },
           { name = "CodeClaude-3-Haiku", disable = true },
           { name = "ChatGPT4o-mini", disable = true },
           { name = "CodeGPT4o-mini", disable = true },
+          add_agent("ChatOpenAIo1-mini", "openai", "o1-mini"),
+          add_agent("CodeOpenAIo1-mini", "openai", "o1-mini"),
+          add_agent("ChatOpenAIo1-preview", "openai", "o1-preview"),
+          add_agent("CodeOpenAIo1-preview", "openai", "o1-preview"),
         },
       })
-      vim.api.nvim_create_autocmd("BufNew", {
+      vim.api.nvim_create_autocmd("BufEnter", {
         pattern = "*/gp/chats/*.md",
         callback = function()
           vim.keymap.set("n", "<cr>", [[:GpChatRespond<cr>]], { buffer = true })
+          vim.keymap.set("n", "<esc>", [[:GpStop<cr>]], { buffer = true })
         end,
       })
+      require("telescope").load_extension("gp_picker")
     end,
     keys = {
-      { "\\c", mode = { "n" }, [[:GpChatNew<cr>]] },
-      { "\\c", mode = { "x" }, [[:<C-u>'<,'>GpChatNew<cr>]] },
-      { "\\v", mode = { "n" }, [[:GpChatToggle<cr>]] },
-      { "\\v", mode = { "x" }, [[:<C-u>'<,'>GpChatToggle<cr>]] },
-      { "\\p", mode = { "x" }, [[:<C-u>'<,'>GpChatPaste<cr>]] },
-      { "\\r", mode = { "x" }, [[:<C-u>'<,'>GpRewrite<cr>]] },
-      { "\\i", mode = { "x" }, [[:<C-u>'<,'>GpImplement<cr>]] },
-      { "\\a", mode = { "x" }, [[:<C-u>'<,'>GpAppend<cr>]] },
-      { "\\b", mode = { "x" }, [[:<C-u>'<,'>GpPrepend<cr>]] },
-      { "\\n", mode = { "n", "x" }, [[:GpNextAgent<cr>]] },
-      { "\\g", mode = { "n", "x" }, [[:GpChatRespond<cr>]] },
-      { "\\s", mode = { "n", "x" }, [[:GpStop<cr>]] },
+      { "<leader>ac", mode = { "n" }, [[:GpChatNew<cr>]] },
+      { "<leader>ac", mode = { "x" }, [[:<C-u>'<,'>GpChatNew<cr>]] },
+      { "<leader>av", mode = { "n" }, [[:GpChatToggle<cr>]] },
+      { "<leader>av", mode = { "x" }, [[:<C-u>'<,'>GpChatToggle<cr>]] },
+      { "<leader>ap", mode = { "x" }, [[:<C-u>'<,'>GpChatPaste<cr>]] },
+      { "<leader>ar", mode = { "x" }, [[:<C-u>'<,'>GpRewrite<cr>]] },
+      { "<leader>ai", mode = { "x" }, [[:<C-u>'<,'>GpImplement<cr>]] },
+      { "<leader>aa", mode = { "x" }, [[:<C-u>'<,'>GpAppend<cr>]] },
+      { "<leader>ab", mode = { "x" }, [[:<C-u>'<,'>GpPrepend<cr>]] },
+      { "<leader>an", mode = { "n", "x" }, [[<cmd>Telescope gp_picker agent<cr>]] },
     },
   },
   { "gnudad/hackernews.nvim",
