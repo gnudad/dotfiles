@@ -704,6 +704,8 @@ require("lazy").setup({
         callback = function()
           vim.keymap.set("n", "<cr>", [[:GpChatRespond<cr>]], { buffer = true })
           vim.keymap.set("n", "<esc>", [[:GpStop<cr>]], { buffer = true })
+          vim.keymap.set({ "n", "x", "o" }, "[[", [[?^\(💬:\|🤖:\)<cr>]], { buffer = true })
+          vim.keymap.set({ "n", "x", "o" }, "]]", [[/^\(💬:\|🤖:\)<cr>]], { buffer = true })
         end,
       })
       require("telescope").load_extension("gp_picker")
