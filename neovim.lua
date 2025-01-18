@@ -187,7 +187,7 @@ require("lazy").setup({
       })
     end,
     cmd = "Neogit",
-    keys = {{ "<leader>gg", [[<cmd>silent wa<cr><cmd>Neogit kind=replace<cr>]] }},
+    keys = {{ "<leader>gg", [[<cmd>silent! wa<cr><cmd>Neogit kind=replace<cr>]] }},
   },
   { "tpope/vim-fugitive", keys = {{ "<leader>gb", [[<cmd>Git blame<cr>]] }} },
   { "sindrets/diffview.nvim",
