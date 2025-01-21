@@ -152,8 +152,9 @@ require("lazy").setup({
       local gs = require("gitsigns")
       gs.setup({})
       local function get_range() return { vim.fn.line("."), vim.fn.line("v") } end
-      vim.keymap.set({"n", "x", "o"}, "[g", function() gs.nav_hunk("prev") end)
-      vim.keymap.set({"n", "x", "o"}, "]g", function() gs.nav_hunk("next") end)
+      vim.keymap.set({ "n", "x", "o" }, "[g", function() gs.nav_hunk("prev") end)
+      vim.keymap.set({ "n", "x", "o" }, "]g", function() gs.nav_hunk("next") end)
+      vim.keymap.set({ "o", "x" }, "ig", [[:<C-u>Gitsigns select_hunk<cr>]])
       vim.keymap.set("n", "<leader>gl", function() gs.blame_line({ full = true }) end)
       vim.keymap.set("n", "<leader>gp", gs.preview_hunk)
       vim.keymap.set("n", "<leader>gr", gs.reset_hunk)
@@ -556,7 +557,7 @@ require("lazy").setup({
       require("various-textobjs").setup({
         keymaps = {
           useDefaults = true,
-          disabledDefaults = { "n", "r" },
+          disabledDefaults = { "g", "n", "r" },
         },
       })
       vim.keymap.set({ "o", "x" }, "ag", "gG", { remap = true })
