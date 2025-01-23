@@ -227,13 +227,21 @@ require("lazy").setup({
               end,
               ["<C-->"] = function(prompt_bufnr) -- Open Oil directory listing
                 actions.close(prompt_bufnr)
-                vim.api.nvim_set_current_dir(state.get_selected_entry().value)
-                vim.cmd("Oil " .. state.get_selected_entry().value)
+                local dir = state.get_selected_entry().value
+                if vim.fn.isdirectory(dir) == 0 then
+                  dir = vim.fn.fnamemodify(dir, ":h")
+                end
+                vim.api.nvim_set_current_dir(dir)
+                vim.cmd("Oil " .. dir)
               end,
               ["<C-g>"] = function(prompt_bufnr) -- Open Neogit status
                 actions.close(prompt_bufnr)
-                vim.api.nvim_set_current_dir(state.get_selected_entry().value)
-                vim.cmd("Neogit kind=replace cwd=" .. state.get_selected_entry().value)
+                local dir = state.get_selected_entry().value
+                if vim.fn.isdirectory(dir) == 0 then
+                  dir = vim.fn.fnamemodify(dir, ":h")
+                end
+                vim.api.nvim_set_current_dir(dir)
+                vim.cmd("Neogit kind=replace cwd=" .. dir)
               end,
               ["<C-t>"] = require("trouble.sources.telescope").open,
             },
