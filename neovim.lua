@@ -667,69 +667,44 @@ require("lazy").setup({
     end,
     keys = {{ "<leader>m", [[<cmd>MarkdownPreviewToggle<cr>]] }},
   },
-  { "Robitx/gp.nvim",
-    dependencies = {
-      "undg/telescope-gp-agent-picker.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
+  { "frankroeder/parrot.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
     config = function()
-      local function add_agent(name, provider, model)
-        local chat = false
-        local prompt = require("gp.defaults").code_system_prompt
-        if string.sub(name, 1, 4) == "Chat" then
-          chat = true
-          prompt = require("gp.defaults").chat_system_prompt
-        end
-        return {
-          name = name, provider = provider, chat = chat, command = not chat,
-          model = { model = model, temperature = 0.7, top_p = 1.0 },
-          system_prompt = prompt,
-        }
-      end
-      require("gp").setup({
+      require("parrot").setup({
         providers = {
-          anthropic = {
-            disable = false,
-            secret = { "cat", vim.fn.expand("~/.dotfiles/anthropic.key") },
-          },
-          openai = {
-            disable = false,
-            secret = { "cat", vim.fn.expand("~/.dotfiles/openai.key") },
-          },
+          anthropic = { api_key = { "cat", vim.fn.expand("~/.dotfiles/anthropic.key") } },
+          openai = { api_key = { "cat", vim.fn.expand("~/.dotfiles/openai.key") } },
         },
-        agents = {
-          { name = "ChatClaude-3-Haiku", disable = true },
-          { name = "CodeClaude-3-Haiku", disable = true },
-          { name = "ChatGPT4o-mini", disable = true },
-          { name = "CodeGPT4o-mini", disable = true },
-          add_agent("ChatOpenAIo1-mini", "openai", "o1-mini"),
-          add_agent("CodeOpenAIo1-mini", "openai", "o1-mini"),
-          add_agent("ChatOpenAIo1-preview", "openai", "o1-preview"),
-          add_agent("CodeOpenAIo1-preview", "openai", "o1-preview"),
-        },
+        chat_user_prefix = "💬:",
+        llm_prefix = "🤖:",
       })
       vim.api.nvim_create_autocmd("BufEnter", {
-        pattern = "*/gp/chats/*.md",
+        pattern = "*/parrot/chats/*.md",
         callback = function()
-          vim.keymap.set("n", "<cr>", [[:GpChatRespond<cr>]], { buffer = true })
-          vim.keymap.set("n", "<esc>", [[:GpStop<cr>]], { buffer = true })
-          vim.keymap.set({ "n", "x", "o" }, "[[", [[?^\(💬:\|🤖:\)<cr>]], { buffer = true })
-          vim.keymap.set({ "n", "x", "o" }, "]]", [[/^\(💬:\|🤖:\)<cr>]], { buffer = true })
+          vim.schedule(function()
+            vim.keymap.set({ "n", "x", "o" }, "[[", [[?^\(💬:\|🤖:\)<cr>]], { buffer = true })
+            vim.keymap.set({ "n", "x", "o" }, "]]", [[/^\(💬:\|🤖:\)<cr>]], { buffer = true })
+          end)
         end,
       })
-      require("telescope").load_extension("gp_picker")
     end,
     keys = {
-      { "<leader>ac", mode = { "n" }, [[:GpChatNew<cr>]] },
-      { "<leader>ac", mode = { "x" }, [[:<C-u>'<,'>GpChatNew<cr>]] },
-      { "<leader>av", mode = { "n" }, [[:GpChatToggle<cr>]] },
-      { "<leader>av", mode = { "x" }, [[:<C-u>'<,'>GpChatToggle<cr>]] },
-      { "<leader>ap", mode = { "x" }, [[:<C-u>'<,'>GpChatPaste<cr>]] },
-      { "<leader>ar", mode = { "x" }, [[:<C-u>'<,'>GpRewrite<cr>]] },
-      { "<leader>ai", mode = { "x" }, [[:<C-u>'<,'>GpImplement<cr>]] },
-      { "<leader>aa", mode = { "x" }, [[:<C-u>'<,'>GpAppend<cr>]] },
-      { "<leader>ab", mode = { "x" }, [[:<C-u>'<,'>GpPrepend<cr>]] },
-      { "<leader>an", mode = { "n", "x" }, [[<cmd>Telescope gp_picker agent<cr>]] },
+      { "<leader>an", mode = { "n" }, [[:PrtChatNew<cr>]] },
+      { "<leader>an", mode = { "x" }, [[:<C-u>'<,'>PrtChatNew<cr>]] },
+      { "<leader>av", mode = { "n" }, [[:PrtChatToggle<cr>]] },
+      { "<leader>av", mode = { "x" }, [[:<C-u>'<,'>PrtChatToggle<cr>]] },
+      { "<leader>ap", mode = { "x" }, [[:<C-u>'<,'>PrtChatPaste<cr>]] },
+      { "<leader>am", mode = { "n", "x" }, [[:PrtProvider<cr>]] },
+      { "<leader>aM", mode = { "n", "x" }, [[:PrtModel<cr>]] },
+      { "<leader>as", mode = { "n", "x" }, [[:PrtStatus<cr>]] },
+      { "<leader>ar", mode = { "x" }, [[:<C-u>'<,'>PrtRewrite<cr>]] },
+      { "<leader>ae", mode = { "n", "x" }, [[:<C-u>'<,'>PrtEdit<cr>]] },
+      { "<leader>aa", mode = { "n" }, [[:PrtAppend<cr>]] },
+      { "<leader>aa", mode = { "x" }, [[:<C-u>'<,'>PrtAppend<cr>]] },
+      { "<leader>ab", mode = { "n" }, [[:PrtPrepend<cr>]] },
+      { "<leader>ab", mode = {  "x" }, [[:<C-u>'<,'>PrtPrepend<cr>]] },
+      { "<leader>aR", mode = { "n", "x" }, [[:<C-u>'<,'>PrtRetry<cr>]] },
+      { "<leader>ai", mode = { "x" }, [[:<C-u>'<,'>PrtImplement<cr>]] },
     },
   },
   { "gnudad/hackernews.nvim",
