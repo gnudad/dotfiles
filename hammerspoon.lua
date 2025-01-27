@@ -56,6 +56,7 @@ hs.loadSpoon("Rcmd"):bindHotkeys({
   f = "Finder",
   g = "Google Chrome",
   h = "Hammerspoon",
+  j = "Msty",
   k = function() hs.application.frontmostApplication():hide() end,
   m = "Music",
   n = "Notion",
