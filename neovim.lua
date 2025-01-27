@@ -204,6 +204,7 @@ require("lazy").setup({
     dependencies = {
       { "nvim-lua/plenary.nvim" },
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      { "nvim-telescope/telescope-ui-select.nvim" },
       { "jvgrootveld/telescope-zoxide" },
     },
     config = function()
@@ -271,8 +272,9 @@ require("lazy").setup({
       })
       require("telescope").load_extension("fzf")
       require("telescope").load_extension("projects")
-      require("telescope").load_extension("zoxide")
+      require("telescope").load_extension("ui-select")
       require("telescope").load_extension("yank_history")
+      require("telescope").load_extension("zoxide")
     end,
     keys = {
       { "<leader>p", [[<cmd>Telescope projects<cr>]] },
@@ -668,19 +670,19 @@ require("lazy").setup({
     keys = {{ "<leader>m", [[<cmd>MarkdownPreviewToggle<cr>]] }},
   },
   { "frankroeder/parrot.nvim",
-    dependencies = "nvim-lua/plenary.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
     config = function()
       require("parrot").setup({
         chat_free_cursor = true,
         chat_user_prefix = "💬:",
         llm_prefix = "🤖:",
         providers = {
-          anthropic = {
-            api_key = { "cat", vim.fn.expand("~/.dotfiles/anthropic.key") },
-            models = {
-              "claude-3-5-sonnet-latest",
-            },
-          },
+          anthropic = { api_key = { "cat", vim.fn.expand("~/.dotfiles/anthropic.key") } },
+          gemini = { api_key = { "cat", vim.fn.expand("~/.dotfiles/gemini.key") } },
+          openai = { api_key = { "cat", vim.fn.expand("~/.dotfiles/openai.key") } },
           deepseek = {
             style = "openai",
             api_key = { "cat", vim.fn.expand("~/.dotfiles/deepseek.key") },
@@ -698,14 +700,6 @@ require("lazy").setup({
               name = "deepseek",
               model = "deepseek-chat",
               params = { max_completion_tokens = 64 },
-            },
-          },
-          openai = {
-            api_key = { "cat", vim.fn.expand("~/.dotfiles/openai.key") },
-            models = {
-              "gpt-4o",
-              "o1-mini",
-              "o1-preview",
             },
           },
         },
