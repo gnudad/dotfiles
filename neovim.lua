@@ -669,6 +669,7 @@ require("lazy").setup({
     end,
     keys = {{ "<leader>m", [[<cmd>MarkdownPreviewToggle<cr>]] }},
   },
+  { "OXY2DEV/markview.nvim", ft = "markdown" },
   { "frankroeder/parrot.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
