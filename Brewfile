@@ -23,6 +23,7 @@ cask "pritunl"
 cask "stats"
 cask "tableplus"
 cask "transmission"
+cask "windows-app" # Remote Desktop
 
 # App Store
 brew "mas"
@@ -31,7 +32,6 @@ mas "Bitwarden", id: 1352778147
 mas "Dark Reader for Safari", id: 1438243180
 mas "Microsoft Excel", id: 462058435
 mas "Microsoft Outlook", id: 985367838
-mas "Microsoft Remote Desktop", id: 1295203466
 mas "Microsoft Word", id: 462054704
 mas "OTP Manager", id: 928941247
 mas "Pixelmator Pro", id: 1289583905
