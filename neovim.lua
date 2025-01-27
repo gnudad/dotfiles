@@ -671,12 +671,44 @@ require("lazy").setup({
     dependencies = "nvim-lua/plenary.nvim",
     config = function()
       require("parrot").setup({
-        providers = {
-          anthropic = { api_key = { "cat", vim.fn.expand("~/.dotfiles/anthropic.key") } },
-          openai = { api_key = { "cat", vim.fn.expand("~/.dotfiles/openai.key") } },
-        },
+        chat_free_cursor = true,
         chat_user_prefix = "💬:",
         llm_prefix = "🤖:",
+        providers = {
+          anthropic = {
+            api_key = { "cat", vim.fn.expand("~/.dotfiles/anthropic.key") },
+            models = {
+              "claude-3-5-sonnet-latest",
+            },
+          },
+          deepseek = {
+            style = "openai",
+            api_key = { "cat", vim.fn.expand("~/.dotfiles/deepseek.key") },
+            endpoint = "https://api.deepseek.com/v1/chat/completions",
+            models = {
+              "deepseek-chat",
+              "deepseek-reason",
+            },
+            params = {
+              chat = { temperature = 0.3, top_p = 0.7 },
+              command = { temperature = 0.3, top_p = 0.7 },
+            },
+            topic_prompt = "You only respond with 3 to 4 words to summarize the past conversation.",
+            topic = {
+              name = "deepseek",
+              model = "deepseek-chat",
+              params = { max_completion_tokens = 64 },
+            },
+          },
+          openai = {
+            api_key = { "cat", vim.fn.expand("~/.dotfiles/openai.key") },
+            models = {
+              "gpt-4o",
+              "o1-mini",
+              "o1-preview",
+            },
+          },
+        },
       })
       vim.api.nvim_create_autocmd("BufEnter", {
         pattern = "*/parrot/chats/*.md",
