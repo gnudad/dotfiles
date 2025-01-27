@@ -577,6 +577,18 @@ require("lazy").setup({
   { "windwp/nvim-autopairs", event = "InsertEnter", config = true },
   { "windwp/nvim-ts-autotag", config = true, ft = { "html", "php", "phtml", "xml" } },
   { "utilyre/sentiment.nvim", event = "VeryLazy", config = true },
+  { "folke/todo-comments.nvim", event = "BufReadPost",
+    dependencies = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup({})
+      vim.keymap.set("n", "[t", require("todo-comments").jump_prev)
+      vim.keymap.set("n", "]t", require("todo-comments").jump_next)
+    end,
+    keys = {
+      { "<leader>tt", [[<cmd>TodoTrouble<cr>]] },
+      { "<leader>tT", [[<cmd>TodoTelescope<cr>]] },
+    },
+  },
   { "kylechui/nvim-surround", config = true, keys = {
       "ys", "ds", "cs", { "S", mode = { "x" } },
   }},
