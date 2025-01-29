@@ -314,9 +314,20 @@ require("lazy").setup({
   },
   { "neovim/nvim-lspconfig",
     dependencies = "williamboman/mason-lspconfig.nvim",
-    ft = { "go", "html", "javascript", "lua", "php", "python" },
+    ft = { "go", "html", "javascript", "json", "lua", "php", "python", "yaml" },
     config = function()
       require("mason-lspconfig").setup({
+        ensure_installed = {
+          "golangci-lint",
+          "golangci_lint_ls",
+          "gopls",
+          "intelephense",
+          "jsonls",
+          "lua_ls",
+          "pyright",
+          "ruff",
+          "yamlls",
+        },
         handlers = {
           function(server_name)
             require("lspconfig")[server_name].setup({
