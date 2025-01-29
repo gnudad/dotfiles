@@ -318,8 +318,7 @@ require("lazy").setup({
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = {
-          "golangci-lint",
-          "golangci_lint_ls",
+          "golangci_lint_ls", -- +"golangci-lint"
           "gopls",
           "intelephense",
           "jsonls",
