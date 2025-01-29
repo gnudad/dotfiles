@@ -11,7 +11,7 @@ alias ls="ls --color"
 alias ll="ls -al"
 alias lt="ll -t | less -FR"
 alias s="kitten ssh"
-alias uuid="uuidgen | tr '[:upper:]' '[:lower:]' | tee >(pbcopy)"
+alias uuid="uuidgen | tr '[:upper:]' '[:lower:]' | tr -d '\n' | tee >(pbcopy)"
 function mkcd() { mkdir -p "$@" && cd "$@"; }
 function v() {
     nvim $1
