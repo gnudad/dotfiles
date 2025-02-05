@@ -712,7 +712,7 @@ require("lazy").setup({
             endpoint = "https://api.deepseek.com/v1/chat/completions",
             models = {
               "deepseek-chat",
-              "deepseek-reason",
+              "deepseek-reasoner",
             },
             params = {
               chat = { temperature = 0.3, top_p = 0.7 },
