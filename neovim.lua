@@ -415,7 +415,6 @@ require("lazy").setup({
             buffer = { score_offset = -7 },
             lsp = { fallbacks = {} }, -- Always show buffer items
           },
-          cmdline = {}, -- Disable cmdline completions
         },
         completion = {
           accept = {
